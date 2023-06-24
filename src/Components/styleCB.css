@@ -1,0 +1,48 @@
+.container_chat{
+    justify-content: end;
+    display:flex;
+}
+.main{
+    position: fixed;
+    bottom:0 ;
+}
+.chat{
+    background: white;
+    padding: 20px;
+    height: 300px;
+}
+.icon_main{
+    justify-content: end;
+    display:flex;
+    margin: 20px;
+}
+.icon{
+ width:50px;
+ cursor: pointer;
+ border-radius: 15px;
+}
+.chatbot-container{
+    justify-content: end;
+    height: 210px;
+    overflow-y: scroll;
+}
+.message{
+    text-align: end;
+    margin-right: 20px;
+    width: 500px;
+    word-wrap: break-word;
+}
+.input{
+    width: 80%;
+    border-radius: 25px;
+    padding: 0 10px;
+    border:none
+}
+.button{
+    
+    border:none;
+    background:none
+}
+.text-blue-500{
+  color:blue
+}

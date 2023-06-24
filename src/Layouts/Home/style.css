@@ -1,0 +1,36 @@
+.box_cont{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+    a:hover{
+        color: red;
+        }
+        a {
+        text-decoration: none;
+        }
+        a:active {
+        color: #FF0;
+        }
+        a:visited {
+        color: gray;
+        }
+.rating li {
+    list-style-type: none;
+    display:flex;
+}
+
+.img{
+    justify-content: center;
+    display: flex;
+}
+
+.image{
+  width: 90%;
+  height: 300px;
+  margin: auto;
+}
+.item-info{
+    padding: 0 10px;
+    text-align: center;
+    margin-top: 4px;
+}
