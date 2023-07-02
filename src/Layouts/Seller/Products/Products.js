@@ -16,29 +16,32 @@ import {
   MDBModalFooter,
   MDBTextArea,
 } from "mdb-react-ui-kit";
-import React, { useState , useEffect} from 'react';
-
+import React, { useState, useRef , useEffect} from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import {
   getAllCategory,
   getProductByShop,
   apiCreateProduct,
   apiUpdateProduct,
-  apiDeleteProduct
+  apiDeleteProduct,
+  getAllProduct
 } from "../../../APIs/product.api";
 
-function Products() {
+function Products({ keyword, setKeyword }) {
   const [basicModal, setBasicModal] = useState(false);
   const toggleShowAdd = () => setBasicModal(!basicModal);
   const [isEdit, setIsEdit] = useState(false);
   const toggleShowEdit = () => setIsEdit(!isEdit);
-
   useEffect(() => {
     getAllCategory(setListCategory);
     getProductByShop(setListProduct);
   }, []);
 
+  const [inputSearch,setInputSearch] = useState('');
+  const navigate = useNavigate();
   const [listCategory, setListCategory] = useState([]);
   const [listProduct, setListProduct] = useState([]);
+  const [listProducts, setListProducts] = useState([]);
   const [file, setFile] = useState([]);
   const [data, setData] = useState({
     idCategory: '',
@@ -67,6 +70,13 @@ function Products() {
     price: '',
     description: '',
     quantity: '',
+    author: '',
+    publisher: '',
+    yearPublisher: '',
+    language:'',
+    size:'',
+    weight:'',
+    numOfPages:''
   });
 
   const [typeUpdate, setTypeUpdate] = useState({
@@ -86,8 +96,19 @@ function Products() {
       setFile(e.target.files[0])
       setChooseImg(true)
   }
+  useEffect(() =>{
+    setListProducts(listProduct)
+  })
+ 
+  useEffect(() =>{
+    if(inputSearch !== '')
+    {
+      setListProducts(listProduct.filter((item) => item.productResponse.name.includes(inputSearch)))
+    }else {
+      setListProducts(listProduct)
+    }
+  },[inputSearch,listProducts])
 
-  console.log(listProduct)
   const handleAdd = () => {
     const form_data = new FormData();
     form_data.append(
@@ -119,7 +140,7 @@ function Products() {
   
     apiUpdateProduct(form_data)
   }
-
+// console.log(listProduct)
   const handleDelete = (idProduct) =>{
     apiDeleteProduct(idProduct)
   }
@@ -149,7 +170,7 @@ function Products() {
       <MDBCol className="mt-4" style={{marginLeft : "-15px"}}>
           <MDBCard className="mb-4">
             <MDBCardBody>
-            {/* <div class="container-fluid" style={{marginLeft : "110px"}}>
+            <div class="container-fluid" style={{marginLeft : "110px"}}>
               <form class="d-flex w-75">
                   <input
                       type="Filter products"
@@ -157,12 +178,14 @@ function Products() {
                       placeholder="Filter products"
                       aria-label="Filter products"
                       aria-describedby="search-addon"
+                      value={inputSearch}
+                      onChange={(e) => {
+                        setInputSearch(e.target.value);
+                      }}
+                      
                   />
-                  <span class="input-group-text border-0 ml-4" id="search-addon">
-                  <i class="fas fa-search"></i>
-                  </span>
               </form>
-            </div> */}
+            </div>
               <MDBRow className="mt-4 ml-1">
                 <MDBCol sm="1">
                   <MDBCardText></MDBCardText>
@@ -176,9 +199,9 @@ function Products() {
                 <MDBCol sm="1">
                   <MDBCardText>Category</MDBCardText>
                 </MDBCol>
-                <MDBCol sm="1">
+                {/* <MDBCol sm="1">
                   <MDBCardText>Type</MDBCardText>
-                </MDBCol>
+                </MDBCol> */}
                 <MDBCol sm="1">
                   <MDBCardText>Price</MDBCardText>
                 </MDBCol>
@@ -186,7 +209,7 @@ function Products() {
                   <MDBCardText>Quantity</MDBCardText>
                 </MDBCol>
               </MDBRow>
-              {listProduct.map((item, index) => (
+              {listProducts.map((item, index) => (
               <MDBRow className="mt-4 ml-1 pt-4 border-top">
                 <MDBCol sm="1">
                   <MDBCardImage
@@ -217,7 +240,7 @@ function Products() {
                 </MDBCol>
                 <MDBCol sm="1">
                   <button type="button" class="btn btn-dark btn-small" name="edit" disabled=""
-                   style={{ padding: "1px 20px ", fontSize :"13px"}}
+                   style={{ padding: "1px 20px ", fontSize :"13px",borderRadius: 30}}
                    onClick={() => {
                     toggleShowEdit();
                     setDataUpdate({
@@ -228,6 +251,13 @@ function Products() {
                       price:item.productResponse.price,
                       description:item.productResponse.description,
                       quantity: item.productResponse.quantity,
+                      size: item.productResponse.size,
+                      author: item.productResponse.author,
+                      publisher: item.productResponse.publisher,
+                      yearPublisher : item.productResponse.yearPublisher,
+                      language : item.productResponse.language,
+                      weight : item.productResponse.weight,
+                      numOfPages : item.productResponse.numOfPages,
                     });
                     setTypeUpdate({
                       id : item.typeList[0].id,
@@ -245,8 +275,8 @@ function Products() {
                   Edit</button>
                 </MDBCol>
                 <MDBCol sm="1">
-                  <button type="button" class="btn btn-dark btn-small" name="edit" disabled=""
-                   style={{ padding: "1px 15px ", fontSize :"13px"}} onClick={() => handleDelete(item.productResponse.id)}>
+                  <button type="button" class="btn btn-dark btn-small" name="edit" disabled="" 
+                   style={{padding: "1px 15px ",backgroundColor:"red",fontSize :"13px",borderRadius:30}} onClick={() => handleDelete(item.productResponse.id)}>
                     Delete
                    </button>
                 </MDBCol>
@@ -257,12 +287,12 @@ function Products() {
                   <MDBModalContent style={{ width : "160%", marginTop : "4rem"}}>
                       <MDBModalHeader>
                       <MDBModalTitle style={{marginLeft : "10px"}}>Add product</MDBModalTitle>
-                      <MDBBtn className='btn-close' color='none' onClick={toggleShowAdd}></MDBBtn>
+                      {/* <MDBBtn className='btn-close' color='none' onClick={toggleShowAdd}></MDBBtn> */}
                       </MDBModalHeader>
                       <MDBModalBody style={{marginLeft : "10px"}}>
                         <MDBRow>
                           <MDBCol sm="2">
-                              <MDBCardText>Title</MDBCardText>
+                              <MDBCardText>Name</MDBCardText>
                           </MDBCol>
                           <MDBCol sm="10">
                             <MDBInput
@@ -331,7 +361,7 @@ function Products() {
                           </MDBCol>
                         </MDBRow>
                         <MDBRow >
-                          <MDBCol sm="12">
+                          {/* <MDBCol sm="12">
                               <MDBCardText>Type</MDBCardText>
                           </MDBCol>
                           <MDBCol sm="6" className="d-block">
@@ -344,7 +374,7 @@ function Products() {
                                 })
                               }}
                             ></MDBInput>
-                          </MDBCol>
+                          </MDBCol> */}
                           <MDBCol sm="6" className="d-block">
                             <MDBCardText>language</MDBCardText>
                             <form class="ordering " method="get">
@@ -465,18 +495,18 @@ function Products() {
                         </MDBRow>
                       </MDBModalBody>
                       <MDBModalFooter>
-                      <MDBBtn color='secondary' style={{height : "40px",  padding: "2px 15px"}} onClick={toggleShowAdd}>
+                      <MDBBtn color='secondary' style={{height : "40px",borderRadius: 30,padding: "2px 15px"}} onClick={toggleShowAdd}>
                           Close
                       </MDBBtn>
                       {data.name.length && data.description.length && data.idCategory.length && data.price.length && data.quantity.length && file ? 
                       (
-                        <MDBBtn style={{height : "40px", padding: "2px 15px"}} 
+                        <MDBBtn style={{height : "40px",borderRadius: 30, padding: "2px 15px"}} 
                         onClick={() => {handleAdd()}} >
                          Save
                       </MDBBtn>
                       ) :
                       (
-                        <MDBBtn style={{height : "40px", padding: "2px 15px"}} >
+                        <MDBBtn style={{height : "40px",borderRadius: 30, padding: "2px 15px"}} >
                          Save
                         </MDBBtn>
                       )}
@@ -489,13 +519,13 @@ function Products() {
                   <MDBModalDialog style={{marginLeft : "25%"}}>
                   <MDBModalContent style={{ width : "160%", marginTop : "4rem"}}>
                       <MDBModalHeader>
-                      <MDBModalTitle style={{marginLeft : "10px"}}>Edit product</MDBModalTitle>
-                      <MDBBtn className='btn-close' color='none' onClick={toggleShowEdit}></MDBBtn>
+                      <MDBModalTitle style={{marginLeft : "10px",}}>Edit product</MDBModalTitle>
+                      {/* <MDBBtn className='btn-close' color='none' onClick={toggleShowEdit}></MDBBtn> */}
                       </MDBModalHeader>
                       <MDBModalBody style={{marginLeft : "10px"}}>
                         <MDBRow>
                           <MDBCol sm="2">
-                              <MDBCardText>Title</MDBCardText>
+                              <MDBCardText>Name</MDBCardText>
                           </MDBCol>
                           <MDBCol sm="10">
                             <MDBInput
@@ -565,21 +595,6 @@ function Products() {
                           </MDBCol>
                         </MDBRow>
                         <MDBRow className="mt-4">
-                          <MDBCol sm="12">
-                              <MDBCardText>Type</MDBCardText>
-                          </MDBCol>
-                          <MDBCol sm="6" className="d-block">
-                            <MDBCardText>name</MDBCardText>
-                            <MDBInput
-                              value={`${typeUpdate.name ? typeUpdate.name : ''}`}
-                              onChange={(e) => {
-                                setTypeUpdate({
-                                  ...typeUpdate,
-                                  name: e.target.value,
-                                })
-                              }}
-                            ></MDBInput>
-                          </MDBCol>
                           <MDBCol sm="6" className="d-block">
                             <MDBCardText>language</MDBCardText>
                             <form class="ordering " method="get">
@@ -587,10 +602,10 @@ function Products() {
                               name="orderby"
                               class="orderby form-control"
                               aria-label="Shop order"
-                              value={`${typeUpdate.language ? typeUpdate.language : ''}`}
+                              value={dataUpdate.language}
                               onChange={(e) => {
-                                setTypeUpdate({
-                                  ...typeUpdate,
+                                setDataUpdate({
+                                  ...dataUpdate,
                                   language: e.target.value,
                                 })
                               }}
@@ -603,10 +618,10 @@ function Products() {
                           <MDBCol sm="6" className="d-block">
                             <MDBCardText>size</MDBCardText>
                             <MDBInput
-                              value={`${typeUpdate.size ? typeUpdate.size : ''}`}
+                              value={dataUpdate.size}
                               onChange={(e) => {
-                                setTypeUpdate({
-                                  ...typeUpdate,
+                                setDataUpdate({
+                                  ...dataUpdate,
                                   size: e.target.value,
                                 })
                               }}
@@ -615,10 +630,10 @@ function Products() {
                           <MDBCol sm="6" className="d-block">
                             <MDBCardText>author</MDBCardText>
                             <MDBInput
-                              value={`${typeUpdate.author ? typeUpdate.author : ''}`}
+                              value={dataUpdate.author}
                               onChange={(e) => {
-                                setTypeUpdate({
-                                  ...typeUpdate,
+                                setDataUpdate({
+                                  ...dataUpdate,
                                   author: e.target.value,
                                 })
                               }}
@@ -627,10 +642,10 @@ function Products() {
                           <MDBCol sm="6" className="d-block">
                             <MDBCardText>publisher</MDBCardText>
                             <MDBInput
-                              value={`${typeUpdate.publisher ? typeUpdate.publisher : ''}`}
+                              value={dataUpdate.publisher}
                               onChange={(e) => {
-                                setTypeUpdate({
-                                  ...typeUpdate,
+                                setDataUpdate({
+                                  ...dataUpdate,
                                   publisher: e.target.value,
                                 })
                               }}
@@ -639,10 +654,10 @@ function Products() {
                           <MDBCol sm="6" className="d-block">
                             <MDBCardText>yearPublisher</MDBCardText>
                             <MDBInput
-                              value={`${typeUpdate.yearPublisher ? typeUpdate.yearPublisher : ''}`}
+                              value={dataUpdate.yearPublisher}
                               onChange={(e) => {
-                                setTypeUpdate({
-                                  ...typeUpdate,
+                                setDataUpdate({
+                                  ...dataUpdate,
                                   yearPublisher: e.target.value,
                                 })
                               }}
@@ -651,10 +666,10 @@ function Products() {
                           <MDBCol sm="6" className="d-block">
                             <MDBCardText>weight</MDBCardText>
                             <MDBInput
-                              value={`${typeUpdate.weight ? typeUpdate.weight : ''}`}
+                              value={dataUpdate.weight}
                               onChange={(e) => {
-                                setTypeUpdate({
-                                  ...typeUpdate,
+                                setDataUpdate({
+                                  ...dataUpdate,
                                   weight: e.target.value,
                                 })
                               }}
@@ -663,10 +678,10 @@ function Products() {
                           <MDBCol sm="6" className="d-block">
                             <MDBCardText>numOfPages</MDBCardText>
                             <MDBInput
-                              value={`${typeUpdate.numOfPages ? typeUpdate.numOfPages : ''}`}
+                              value={dataUpdate.numOfPages}
                               onChange={(e) => {
-                                setTypeUpdate({
-                                  ...typeUpdate,
+                                setDataUpdate({
+                                  ...dataUpdate,
                                   numOfPages: e.target.value,
                                 })
                               }}
@@ -707,10 +722,10 @@ function Products() {
                         </MDBRow>
                       </MDBModalBody>
                       <MDBModalFooter>
-                      <MDBBtn color='secondary' style={{height : "40px" ,  padding: "2px 15px", fontSize :"13px"}} onClick={toggleShowEdit}>
+                      <MDBBtn color='secondary' style={{height : "40px" ,  padding: "2px 15px", fontSize :"13px",borderRadius: 30}} onClick={toggleShowEdit}>
                           Close
                       </MDBBtn>
-                      <MDBBtn style={{height : "40px" ,  padding: "2px 15px" , fontSize :"13px"}} onClick={() => {handleUpdate()}}>Save</MDBBtn>
+                      <MDBBtn style={{height : "40px" ,padding: "2px 15px" , fontSize :"13px",borderRadius: 30}} onClick={() => {handleUpdate()}}>Save</MDBBtn>
                       </MDBModalFooter>
                   </MDBModalContent>
                   </MDBModalDialog>

@@ -48,16 +48,6 @@ function ListOrder({ listProduct, name }) {
           <a className="mb-2">{item1.nameProduct}</a>
         </td>
         <td
-          class="product-shop"
-          data-title="Shop"
-          style={{
-            width: "15%",
-          }}
-        >
-          <a className="mb-2">{item1.nameShop}</a>
-        </td>
-
-        <td
           class="product-price"
           data-title="Price"
           style={{
@@ -75,6 +65,15 @@ function ListOrder({ listProduct, name }) {
         >
           <a className="mb-2">{item1.numberProduct}</a>
         </td>
+        {/* <td
+          class="product-price"
+          data-title="DateOrder"
+          style={{
+            width: "9%",
+          }}
+        >
+          <a className="mb-2">{item1.getInforOrder.dateOrder.slice(0,10)}</a>
+        </td> */}
         <td
           class="product-price"
           data-title="Category"
@@ -89,124 +88,13 @@ function ListOrder({ listProduct, name }) {
           class="product-subtotal"
           data-title="Total"
           style={{
-            width: "12%",
+            width: "42%",
           }}
         >
           <span class="amount">{item1.numberProduct * item1.price} đ</span>
         </td>
       </tr>
     );
-    // return (
-    //   <tr class="cart_item">
-    //     <td
-    //       class="product-name"
-    //       data-title="Product"
-    //       style={{
-    //         width: "13%",
-    //       }}
-    //     >
-    //       <div className="d-flex flex-column">
-    //         {item.products.map((item1, index1) => {
-    //           return (
-    //             <img
-    //               class="img-fluid w-100 mb-3 img-first"
-    //               src={
-    //                 item1.urlImgList?.length > 0
-    //                   ? `https://res.cloudinary.com/dpnhk5kup/image/upload/${item1.urlImgList[0]?.url}`
-    //                   : "assets/images/322.jpg"
-    //               }
-    //               alt="product-img"
-    //             />
-    //           );
-    //         })}
-    //       </div>
-    //     </td>
-    //     <td
-    //       class="product-name"
-    //       data-title="Product"
-    //       style={{
-    //         width: "17%",
-    //         backgroundColor: "red",
-    //       }}
-    //     >
-    //       {/* <a>{item.products.nameProduct}</a> */}
-    //       <div
-    //         className="d-flex flex-column"
-    //         style={{
-    //           height: "100%",
-    //           backgroundColor: "blue",
-    //         }}
-    //       >
-    //         {item.products.map((item1, index1) => {
-    //           return <a className="mb-2">{item1.nameProduct}</a>;
-    //         })}
-    //       </div>
-    //     </td>
-    //     <td
-    //       class="product-shop"
-    //       data-title="Shop"
-    //       style={{
-    //         width: "15%",
-    //       }}
-    //     >
-    //       <div className="d-flex flex-column">
-    //         {item.products.map((item1, index1) => {
-    //           return <a className="mb-2">{item1.nameShop}</a>;
-    //         })}
-    //       </div>
-    //     </td>
-
-    //     <td
-    //       class="product-price"
-    //       data-title="Price"
-    //       style={{
-    //         width: "11%",
-    //       }}
-    //     >
-    //       <div className="d-flex flex-column">
-    //         {item.products.map((item1, index1) => {
-    //           return <a className="mb-2">{item1.price}</a>;
-    //         })}
-    //       </div>
-    //     </td>
-    //     <td
-    //       class="product-price"
-    //       data-title="Quantity"
-    //       style={{
-    //         width: "8%",
-    //       }}
-    //     >
-    //       <div className="d-flex flex-column">
-    //         {item.products.map((item1, index1) => {
-    //           return <a className="mb-2">{item1.numberProduct}</a>;
-    //         })}
-    //       </div>
-    //     </td>
-    //     <td
-    //       class="product-price"
-    //       data-title="Category"
-    //       style={{
-    //         width: "23%",
-    //       }}
-    //     >
-    //       <div className="d-flex flex-column">
-    //         {item.products.map((item1, index1) => {
-    //           return <a className="mb-2">{item1.typeOrder}</a>;
-    //         })}
-    //       </div>
-    //     </td>
-
-    //     <td
-    //       class="product-subtotal"
-    //       data-title="Total"
-    //       style={{
-    //         width: "12%",
-    //       }}
-    //     >
-    //       <span class="amount">{item.totalPrice} đ</span>
-    //     </td>
-    //   </tr>
-    // );
   });
   return (
     <div className="checkout-container">
@@ -225,10 +113,9 @@ function ListOrder({ listProduct, name }) {
                       <tr>
                         <th class="product-name"></th>
                         <th class="product-name">Product</th>
-                        <th class="product-name">Shop</th>
                         <th class="product-price">Price</th>
                         <th class="product-quantity">Quantity</th>
-                        <th class="product-category">Category</th>
+                        <th class="product-category">DateOrder</th>
                         <th class="product-subtotal">Total</th>
                       </tr>
                     </thead>
@@ -239,29 +126,6 @@ function ListOrder({ listProduct, name }) {
               </div>
             </div>
           </div>
-          {/* <a
-            class="btn btn-dark btn-small text-white"
-            style={{
-              cursor: "pointer",
-              marginRight: 10,
-            }}
-            onClick={() => {
-              //   setIsClickContinue(false);
-            }}
-          >
-            Back
-          </a>
-          <a
-            class="btn btn-main btn-small"
-            style={{
-              cursor: "pointer",
-            }}
-            onClick={() => {
-              //   handleOrder();
-            }}
-          >
-            Confirm
-          </a> */}
         </div>
       </section>
     </div>

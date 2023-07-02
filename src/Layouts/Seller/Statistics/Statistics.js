@@ -1,18 +1,18 @@
+import React,{ useState,useEffect } from 'react';
 import {
   MDBCol,
+  //MDBInput,
   MDBRow,
   MDBCard,
   MDBCardText,
   MDBCardBody,
-  MDBTextArea,
+  //MDBTextArea,
 } from "mdb-react-ui-kit";
-import React, { useState,useEffect } from 'react';
-
 import {
-  getSaleInforOrderReceived
-} from "../../../../APIs/order.api";
-
-function Received() {
+  getSaleInforOrderReceived,
+  apiUpdateStatus
+} from "../../../APIs/order.api";
+const Statistic = ({ revenue }) => {
   const [listInforReceived, setListOrderReceived] = useState([])
 
   useEffect(() => {
@@ -20,9 +20,9 @@ function Received() {
   },[])
 
   return (
-  <div className="p-4 block">
+    <div className="p-4 block">
       <div className="d-flex">
-        <h4>Received</h4>
+        <h4>Statistic</h4>
       </div>
       <MDBCol className="mt-4" style={{marginLeft : "-15px"}}>
           <MDBCard className="mb-4">
@@ -43,56 +43,71 @@ function Received() {
               </div>
               <MDBRow className="mt-4 ml-1">
                 <MDBCol sm="2">
-                  <MDBCardText>DateReceived</MDBCardText>
+                  <MDBCardText>Products</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="2">
-                  <MDBCardText>Name</MDBCardText>
+                  <MDBCardText>Months</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="2">
-                  <MDBCardText>Address</MDBCardText>
+                  <MDBCardText>Số lượng đã bán</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="2">
-                  <MDBCardText>Product</MDBCardText>
+                  <MDBCardText>Số lượng còn lại</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="2">
-                  <MDBCardText>Phone</MDBCardText>
+                  <MDBCardText>Doanh thu</MDBCardText>
                 </MDBCol>
-                <MDBCol sm="1">
+                {/* <MDBCol sm="1">
                   <MDBCardText>Total</MDBCardText>
-                </MDBCol>
+                </MDBCol> */}
               </MDBRow>
               {listInforReceived.map((item, index) => (
               <MDBRow className="mt-4 ml-1 pt-4 border-top">
-                <MDBCol sm="2">
+                {/* <MDBCol sm="2">
                   <MDBCardText>{item.dateOrder.slice(0,10)}</MDBCardText>
-                </MDBCol>
-                <MDBCol sm="2">
-                  <MDBCardText>{item.namePersonOrder}</MDBCardText>
-                </MDBCol>
-                <MDBCol sm="2">
-                  <MDBCardText>{item.addressOrder}</MDBCardText>
-                </MDBCol>
+                </MDBCol> */}
                 <MDBCol sm="4">
                 {(item?.products).map((product, index) =>(
                   <MDBRow>
                     <MDBCol style={{ width : "40%"}}>
                       <MDBCardText>{product.nameProduct} - SL: {product.numberProduct}</MDBCardText>
                     </MDBCol>
-                    <MDBCol >
-                      <MDBCardText>{product.phone}</MDBCardText>
-                    </MDBCol>
+                    {/* <MDBCol >
+                      <MDBCardText>{product.typeOrder}</MDBCardText>
+                    </MDBCol> */}
                   </MDBRow>
                   ))}
                 </MDBCol>
+                <MDBCol sm="2">
+                  <MDBCardText>{item.dateOrder.slice(0,10)}</MDBCardText>
+                </MDBCol>
+                <MDBCol sm="2">
+                  <MDBCardText>{item.namePersonOrder}</MDBCardText>
+                </MDBCol>
+                {/* <MDBCol sm="2">
+                  <MDBCardText>{item.addressOrder}</MDBCardText>
+                </MDBCol> */}
+                
                 <MDBCol sm="1">
                   <MDBCardText>{item.totalPrice}</MDBCardText>
                 </MDBCol>
+                {/* <MDBCol sm="1" style={{marginTop : "-5px", marginLeft : "-28px",}}>
+                  <button type="button" style={{padding: "2px 12px", fontSize:"15px", borderRadius:30}} class="btn btn-dark " name="edit" disabled="" 
+                   onClick={() => updateStatus(item.idOrder)}
+                  >Transport</button>
+                </MDBCol> */}
               </MDBRow>
-              ))}
+               ))}
             </MDBCardBody>
           </MDBCard>
       </MDBCol>
   </div>
-  )
-}
-export default Received
+  );
+    // <div>
+    //   <h2>Thống kê doanh thu sản phẩm</h2>
+    //   <p>Doanh thu: {revenue}</p>
+    // </div>
+
+};
+
+export default Statistic;

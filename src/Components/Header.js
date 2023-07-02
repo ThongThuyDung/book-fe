@@ -15,6 +15,7 @@ import { height } from "@mui/system";
 
 function Header({ keyword, setKeyword }) {
   const [listCart, setListCart] = useState([]);
+  
   useEffect(() => {
     getItem(setListCart);
   });
@@ -32,7 +33,8 @@ function Header({ keyword, setKeyword }) {
     });
     setTotalPrice(price);
   }, [listCart]);
-  const onButtonClickSearch = () => {
+  const onButtonClickSearch = ({keyword}) => {
+    keyword(`product/search-product/${keyword}?num=1`);
     inputSearch.current.focus();
   };
   const [heightScroll, setHeightScroll] = useState(false);
@@ -73,6 +75,7 @@ function Header({ keyword, setKeyword }) {
 
         <input
           type="search"
+          value={keyword}
           ref={inputSearch}
           style={{
             height: "45px",

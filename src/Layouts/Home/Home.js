@@ -1,7 +1,8 @@
 import React, {useState,useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
 import ListProduct from "../../Components/ListProduct";
-import  './style.css'
+import  './style.css';
+import Chatbot from "../../Components/Chatbot";
 import { getAllProduct } from '../../APIs/product.api';
 
 export default function Home({ keyword }) {
@@ -13,16 +14,6 @@ export default function Home({ keyword }) {
   useEffect(() => {
     getAllProduct(setListProduct);
   }, []);
-
-  // console.log(listProduct)
-
-  //console.log(listProduct)
-  // const items = [
-  //   "assets/images/nlkn.png",
-  //   "ssets/images/du_lieu_lon.png",
-  //   "assets/images/huong_nghiep.png",
-    
-  // ]
   return (
     <div className="home-container bg-gray">
       <div className="main-slider slider slick-initialized slick-slider">
@@ -113,16 +104,6 @@ export default function Home({ keyword }) {
                   <h4 class="mb-0 px-6">
                   {item.productResponse.price}đ
                   </h4>
-                  <a href="./" class="read-more">
-                    Shop now
-                  </a>
-                  {/* <ul class="rating" data-mdb-toggle="rating">
-                        <li><i class="far fa-star fa-sm text-primary" title="Bad"></i></li>
-                        <li><i class="far fa-star fa-sm text-primary" title="Poor"></i></li>
-                        <li><i class="far fa-star fa-sm text-primary" title="OK"></i></li>
-                        <li><i class="far fa-star fa-sm text-primary" title="Good"></i></li>
-                        <li><i class="far fa-star fa-sm text-primary" title="Excellent"></i></li>
-                      </ul> */}
                 </div>
               </div>
             </div>
@@ -133,7 +114,7 @@ export default function Home({ keyword }) {
       <section class="category section pt-3 pb-0">
         <div class="container box_cont bg-white">
         <div>
-          <h4 class="pt-4 p-2"><img src='assets/images/ico_menu_red.svg' alt='' />Gợi ý hôm nay</h4>
+          <h4 class="pt-4 p-2"><img src='assets/images/ico_menu_red.svg' alt='' />Gợi ý gần đây</h4>
           </div>
         
           <div class="row border-2 border-top">
@@ -194,7 +175,7 @@ export default function Home({ keyword }) {
                 <i class="tf-key"></i>
                 <div class="content">
                   <h5>Secure Checkout</h5>
-                  <p>100% Protected by paypal</p>
+                  
                 </div>
               </div>
             </div>
@@ -210,7 +191,7 @@ export default function Home({ keyword }) {
           </div>
         </div>
       </section>
-      
+      <Chatbot/>
     </div>
   );
 }

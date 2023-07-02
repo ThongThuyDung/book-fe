@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {
   deleteItemInCart,
@@ -16,6 +17,17 @@ function Cart({ setListItemChosen, listItemChosen }) {
   const [listProduct, setListProduct] = useState([]);
   const [checked, setChecked] = useState(false);
   const [action, setAction] = useState(false);
+  const params = useParams();
+  const [product, setProduct] = useState({});
+  // const [Data,setData] = useState({
+  //   productId: parseInt(params.productId),
+  //   quantity: 1
+   
+  // });
+  useEffect(() => {
+    // alert(params.productId);
+    getProductById(params.productId, setProduct);
+  }, []);
   const navigate = useNavigate();
   useEffect(() => {
     getItem(setListCart);
@@ -34,6 +46,7 @@ function Cart({ setListItemChosen, listItemChosen }) {
   const [data, setData] = useState({
     quantity: "",
     itemId: 0,
+    productId: parseInt(params.productId),
   });
 
   const handleUpdateCart = (idItem, quantity) => {
@@ -131,22 +144,24 @@ function Cart({ setListItemChosen, listItemChosen }) {
         <td class="product-quantity" data-title="Quantity">
           <div class="quantity">
             <label class="sr-only">Quantity</label>
-            <input 
-              class="input-text qty text"
-               type="number" 
-               value={data?.quantity}
-              onChange={(e) => {
-                handleUpdateCart(
-                  item?.id,
-                  parseInt(e.target.value),
-                  item.type?.id
-                );
-                setData({
-                  ...data,
-                  quantity: parseInt(e.target.value),
-                });
-              }}
-               />
+            <input
+                      type="number"
+                      id="#"
+                      class="input-text qty text form-control w-25 mr-3"
+                      step="1"
+                      min="1"
+                      // max="9"
+                      name="quantity"
+                      value={data.quantity}
+                      title="Qty"
+                      size="4"
+                      onChange={(e) => {
+                        setData({
+                          ...data,
+                          quantity: parseInt(e.target.value),
+                        });
+                      }}
+                    />        
           </div>
         </td>
 
@@ -289,7 +304,7 @@ function Cart({ setListItemChosen, listItemChosen }) {
                         <th class="product-name">Product</th>
                         <th class="product-price">Price</th>
                         <th class="product-quantity">Quantity</th>
-                        <th class="product-category">Category</th>
+                        {/* <th class="product-category">Category</th> */}
                         <th class="product-subtotal">Total</th>
                         <th class="product-remove"> </th>
                       </tr>
@@ -300,7 +315,7 @@ function Cart({ setListItemChosen, listItemChosen }) {
                       <tr>
                         <td colspan="12" class="actions">
                           <div class="coupon">
-                            <input
+                            {/* <input
                               type="text"
                               name="coupon_code"
                               class="input-text form-control"
@@ -315,7 +330,7 @@ function Cart({ setListItemChosen, listItemChosen }) {
                               value="Apply coupon"
                             >
                               Apply coupon
-                            </button>
+                            </button> */}
                             {listItemChosen.length > 0 ? (
                               <span class="float-right mt-3 mt-lg-0">
                                 <button

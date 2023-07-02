@@ -39,7 +39,7 @@ function Header_Seller() {
         </div> */}
         <ul class="top-menu list-inline mb-0 d-lg-flex ml-14" id="top-menu">
             <li class="list-inline-item">
-              <a href="./">
+              <a href="#">
                 <i class="tf-ion-ios-person mr-3"></i>
               </a>
             </li>

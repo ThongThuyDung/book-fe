@@ -113,6 +113,7 @@ function SignUp() {
                     </a> */}
                     <input
                       type="text"
+                      style={{borderRadius:30}}
                       class="form-control"
                       placeholder="Nhập tài khoản"
                       onChange={(e) => {
@@ -131,6 +132,7 @@ function SignUp() {
                     <label for="#">Nhập mật khẩu</label>
                     <input
                       type="password"
+                      style={{borderRadius:30}}
                       class="form-control"
                       placeholder="Nhập mật khẩu"
                       onChange={(e) => {
@@ -149,6 +151,7 @@ function SignUp() {
                     <label for="#">Nhập lại mật khẩu</label>
                     <input
                       type="password"
+                      style={{borderRadius:30}}
                       class="form-control"
                       placeholder="Nhập lại mật khẩu"
                       onChange={(e) => {
@@ -171,7 +174,11 @@ function SignUp() {
                   <a
                     class="btn btn-main mt-3 btn-block"
                     style={{
+                      borderRadius:30,
                       cursor: "pointer",
+                      width: 170,
+                      alignItems:'center',
+                      margin:'auto'
                     }}
                     onClick={() => {
                       handleSignUp();

@@ -51,13 +51,10 @@ function getOrderTransport(setListOrderTransport) {
   })
     .then((res) => res.data)
     .then((data) => {
-      return data.body;
-    })
-    .then((body) => {
-      body.sort((a, b) => {
+      data.sort((a, b) => {
         return Date.parse(b.dateOrder) - Date.parse(a.dateOrder);
       });
-      setListOrderTransport(body);
+      setListOrderTransport(data);
     })
     .catch((err) => {
       console.log(err);
@@ -74,13 +71,10 @@ function getOrderReceived(setListOrderReceived) {
   })
     .then((res) => res.data)
     .then((data) => {
-      return data.body;
-    })
-    .then((body) => {
-      body.sort((a, b) => {
+      data.sort((a, b) => {
         return Date.parse(b.dateOrder) - Date.parse(a.dateOrder);
       });
-      setListOrderReceived(body);
+      setListOrderReceived(data);
     })
     .catch((err) => {
       console.log(err);
@@ -97,13 +91,10 @@ function getOrderOrdered(setListOrderOrdered) {
   })
     .then((res) => res.data)
     .then((data) => {
-      return data.body;
-    })
-    .then((body) => {
-      body.sort((a, b) => {
+      data.sort((a, b) => {
         return Date.parse(b.dateOrder) - Date.parse(a.dateOrder);
       });
-      setListOrderOrdered(body);
+      setListOrderOrdered(data);
     })
     .catch((err) => {
       console.log(err);
@@ -121,22 +112,9 @@ function getInforOrder(Data, setListItem, navigate) {
   })
     .then((res) => 
     {
+      console.log(res.data);
       setListItem(res.data)
     })
-    // .then((data) => {
-    //   console.log(data)
-    //   return data.body;
-    // })
-    // .then((body) => {
-    //   console.log(body);  
-    //   if (!body) {
-    //     alert("error when order");
-    //     navigate("/cart");
-    //   } else {
-    //     setListItem(body);
-    //     // console.log(body);
-    //   }
-    // })
     .catch((err) => {
       console.log(err);
     });
@@ -155,21 +133,12 @@ function createOrder(Data, navigate, notify) {
     .then((data) => {
       notify("Order successfully!");
       console.log(data);
-      return data.body;
-    })
-    .then((body) => {
-      if (body?.length > 0) {
-        // alert("Order successfully!");
-        notify("Order successfully!");
-        navigate("/cart");
-      } else {
-        console.log(body);
-      }
     })
     .catch((err) => {
       console.log(err);
     });
 }
+
 
 function getSaleInforOrderOrdered(setInforOrderOrdered) {
   axios({
@@ -179,7 +148,7 @@ function getSaleInforOrderOrdered(setInforOrderOrdered) {
       Authorization: `${getLocalStorage(STORAGE.USER_TOKEN)}`,
     },
   })
-    .then((res) => res.data.body)
+    .then((res) => res.data)
     .then((data) => {
       setInforOrderOrdered(data);
     })
@@ -196,7 +165,7 @@ function getSaleInforOrderTransport(setInforOrderTransport) {
       Authorization: `${getLocalStorage(STORAGE.USER_TOKEN)}`,
     },
   })
-    .then((res) => res.data.body)
+    .then((res) => res.data)
     .then((data) => {
       setInforOrderTransport(data);
     })
@@ -213,7 +182,7 @@ function getSaleInforOrderReceived(setInforOrderReceived) {
       Authorization: `${getLocalStorage(STORAGE.USER_TOKEN)}`,
     },
   })
-    .then((res) => res.data.body)
+    .then((res) => res.data)
     .then((data) => {
       setInforOrderReceived(data);
     })
@@ -231,9 +200,9 @@ function apiUpdateStatus(Data) {
       Authorization: `${getLocalStorage(STORAGE.USER_TOKEN)}`,
     },
   })
-    .then((res) => res.data.body)
+    .then((res) => res.data)
     .then((data) => {
-      window.location.reload();
+      // window.location.reload();
       console.log(data);
     })
     .catch((err) => {

@@ -76,7 +76,7 @@ function Login() {
                   <h2 class="mb-2">Đăng nhập</h2>
                   <p class="lead">
                     Bạn chưa có tài khoản?{" "}
-                    <a href="/signup">Tạo tài khoản</a>
+                    <a href="/signup">đăng ký ngay</a>
                   </p>
                 </div>
 
@@ -85,6 +85,7 @@ function Login() {
                     <label for="#">Tài khoản</label>
                     <input
                       type="text"
+                      style={{borderRadius:30}}
                       class="form-control"
                       placeholder="Nhập tài khoản"
                       onChange={(e) => {
@@ -108,6 +109,7 @@ function Login() {
                       type="password"
                       class="form-control"
                       placeholder="Nhập mật khẩu"
+                      style={{borderRadius:30}}
                       onChange={(e) => {
                         setData({
                           ...data,
@@ -120,30 +122,6 @@ function Login() {
                   {errData.errPassword && errData.errPassword !== "err" ? (
                     <p style={{ color: "red" }}>{errData.errPassword}!!!</p>
                   ) : null}
-
-                  {/* <MDBRow>
-                    <FormControl fullWidth style={{ padding: "5px 13px" }}>
-                      <InputLabel
-                        id="demo-simple-select-label"
-                        style={{ marginLeft: "15px" }}
-                      >
-                        Position
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={position}
-                        label="Position"
-                        sx={{ height: "45px" }}
-                        onChange={(e) => {
-                          setPosition(e.target.value);
-                        }}
-                      >
-                        <MenuItem value={0}>User</MenuItem>
-                        <MenuItem value={1}>Seller</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </MDBRow> */}
                   {errData.errCommon ? (
                     <p style={{ color: "red" }}>{errData.errCommon}!!!</p>
                   ) : null}
@@ -151,7 +129,11 @@ function Login() {
                   <a
                     class="btn btn-main mt-3 btn-block" 
                     style={{
+                      borderRadius:30,
                       cursor: "pointer",
+                      width: 200,
+                      alignItems:'center',
+                      margin:'auto'
                     }}
                     onClick={() => {
                       handleSignIn();

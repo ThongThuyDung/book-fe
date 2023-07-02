@@ -48,7 +48,7 @@ function Transport() {
               </div>
               <MDBRow className="mt-4 ml-1">
                 <MDBCol sm="2">
-                  <MDBCardText>DataOrder</MDBCardText>
+                  <MDBCardText>DateTransport</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="2">
                   <MDBCardText>Name</MDBCardText>
@@ -60,7 +60,7 @@ function Transport() {
                   <MDBCardText>Product</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="2">
-                  <MDBCardText>TypeOrder</MDBCardText>
+                  <MDBCardText>Phone</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="1">
                   <MDBCardText>Total</MDBCardText>
@@ -84,7 +84,7 @@ function Transport() {
                       <MDBCardText>{product.nameProduct} - SL: {product.numberProduct}</MDBCardText>
                     </MDBCol>
                     <MDBCol >
-                      <MDBCardText>{product.typeOrder}</MDBCardText>
+                      <MDBCardText>{product.phone}</MDBCardText>
                     </MDBCol>
                   </MDBRow>
                   ))}
@@ -93,7 +93,7 @@ function Transport() {
                   <MDBCardText>{item.totalPrice}</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="1" style={{marginTop : "-5px", marginLeft : "-28px"}}>
-                  <button type="button" style={{padding: "2px 12px", fontSize:"15px",fontSize :"13px"}} class="btn btn-dark " name="edit" disabled=""
+                  <button type="button" style={{padding: "2px 12px", fontSize:"15px",fontSize :"13px", borderRadius:30}} class="btn btn-dark " name="edit" disabled=""
                    onClick={() => updateStatus(item.idOrder)}
                   >Received</button>
                 </MDBCol>

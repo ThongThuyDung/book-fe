@@ -14,6 +14,8 @@ function Checkout({ listItemChosen }) {
     listIdItem: listItemChosen,
     province: "",
     address: "",
+    name: "",
+    phone: "",
   });
   const notify = (value) => toast(value);
   const [fillInfor, setFillInfor] = useState({});
@@ -21,17 +23,19 @@ function Checkout({ listItemChosen }) {
   useEffect(() => {
     getPayment(setListMethod);
     getAddressOrder(setFillInfor);
-    // console.log(listItemChosen);
   }, []);
   useEffect(() => {
     getProfile(setCurrentProfile);
   }, []);
-  console.log(currentProfile)
+
+  // console.log(currentProfile)
+  
   const [errData, setErrData] = useState({
     errStreet: "err",
     errProvince: "err",
     errCommon: "",
   });
+
   const validateStreet = (value) => {
     if (value === "") {
       setErrData({
@@ -45,6 +49,7 @@ function Checkout({ listItemChosen }) {
       });
     }
   };
+
   const validateProvince = (value) => {
     if (value === "") {
       setErrData({
@@ -58,14 +63,20 @@ function Checkout({ listItemChosen }) {
       });
     }
   };
+
   useEffect(() => {
     setDataOrder({
       ...dataOrder,
-      province: currentProfile.district,
+      province: currentProfile.province?.province_name,
       address: fillInfor?.address,
+      name: currentProfile.name,
+      phone: currentProfile.phone,
     });
+    getInforOrder(dataOrder, setListItem, navigate);
   }, [fillInfor,currentProfile]);
+
   const navigate = useNavigate();
+
   const handleGetInforOrder = () => {
     if (dataOrder.address && dataOrder.province) {
       setErrData({
@@ -82,7 +93,6 @@ function Checkout({ listItemChosen }) {
     }
   };
 
-  console.log(listItem)
   useEffect(() => {
     let objectRes = {
       totalPrice: 0,
@@ -97,17 +107,16 @@ function Checkout({ listItemChosen }) {
     });
     setListItemAfter(objectRes);
   }, [listItem]);
-  console.log(fillInfor)
+
   const handleOrder = () => {
     let data = {
-      idPayment: 1,
+      // idPayment: 1,
       listIdItem: listItemChosen,
-      province: fillInfor.district,
-      address: fillInfor.address,
-      // province: "1",
-      // address: "1",
+      province: dataOrder.province,
+      address: dataOrder.address,
+      info: dataOrder.name + "; " + dataOrder.phone + "; " + dataOrder.address,
     };
-    console.log(dataOrder);
+    // console.log(data);
     // console.log(fillInfor.district.province.province_name);
     createOrder(dataOrder, navigate, notify);
   };
@@ -126,9 +135,9 @@ function Checkout({ listItemChosen }) {
         <td class="product-name" data-title="Product">
           <a>{item.nameProduct}</a>
         </td>
-        <td class="product-name" data-title="Shop">
+        {/* <td class="product-name" data-title="Shop">
           <a>{item.nameShop}</a>
-        </td>
+        </td> */}
 
         <td class="product-price" data-title="Price">
           <span class="amount">
@@ -181,7 +190,6 @@ function Checkout({ listItemChosen }) {
           </div>
         </div>
       </section>
-      {!isClickContinue ? (
         <div class="page-wrapper">
           <div class="checkout shopping">
             <div class="container">
@@ -336,92 +344,10 @@ function Checkout({ listItemChosen }) {
                     </form>
                   </div>
                 </div>
-
-                <div class="col-md-6 col-lg-4">
-                  <div class="product-checkout-details mt-5 mt-lg-0">
-                    <h4 class="mb-4 border-bottom pb-4">Payment Method</h4>
-
-                    {/* <div class="media product-card">
-                      <p>Kirby Shirt</p>
-                      <div class="media-body text-right">
-                        <p class="h5">1 x $249</p>
-                      </div>
-                    </div>
-
-                    <ul class="summary-prices list-unstyled mb-4">
-                      <li class="d-flex justify-content-between">
-                        <span>Subtotal:</span>
-                        <span class="h5">$190</span>
-                      </li>
-                      <li class="d-flex justify-content-between align-items-center">
-                        <span>Shipping:</span>
-                        <span class="h5">Free</span>
-                      </li>
-                      <li class="d-flex justify-content-between">
-                        <span>Total:</span>
-                        <span class="h5">$250</span>
-                      </li>
-                    </ul> */}
-
-                    <form action="#">
-                      {listMethod.map((item, index) => {
-                        return (
-                          <div class="form-check mb-3" key={item.id}>
-                            <input
-                              class="form-check-input"
-                              type="radio"
-                              name="exampleRadios"
-                              id="exampleRadios2"
-                              value="option2"
-                              checked={index === 0 ? true : false}
-                            />
-                            <label
-                              class="form-check-label"
-                              for="exampleRadios2"
-                            >
-                              {item.name}
-                            </label>
-                          </div>
-                        );
-                      })}
-                    </form>
-
-                    {/* <div class="info mt-4 border-top pt-4 mb-5">
-                    Your personal data will be used to process your order,
-                    support your experience throughout this website, and for
-                    other purposes described in our{" "}
-                    <a href="#">privacy policy</a>.
-                  </div> */}
-                    <a
-                      class="btn btn-dark btn-small text-white"
-                      style={{
-                        cursor: "pointer",
-                        marginRight: 10,
-                      }}
-                      onClick={() => {
-                        navigate("/cart");
-                      }}
-                    >
-                      Back
-                    </a>
-                    <a
-                      class="btn btn-main btn-small"
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      onClick={() => {
-                        handleGetInforOrder();
-                      }}
-                    >
-                      Continue
-                    </a>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
         </div>
-      ) : (
         <section class="cart shopping page-wrapper">
           <div className="row justify-content-center">
             <div class="col-lg-6">
@@ -430,16 +356,20 @@ function Checkout({ listItemChosen }) {
                 <ul class="list-unstyled mb-4">
                   <li class="d-flex align-items-start py-2">
                     <p class="mr-3">Name:</p>
-                    <p>{listItem[0]?.namePersonOrder}</p>
+                    <p>{dataOrder.name}</p>
+                  </li>
+                  <li class="d-flex align-items-start py-2">
+                    <p class="mr-3">Phone:</p>
+                    <p>{dataOrder.phone}</p>
                   </li>
                   <li class="d-flex align-items-start py-2">
                     <p class="mr-3">Address:</p>
-                    <p>{listItem[0]?.addressOrder}</p>
+                    <p>{dataOrder.address + ", " + dataOrder.province}</p>
                   </li>
-                  <li class="d-flex align-items-start py-2">
+                  {/* <li class="d-flex align-items-start py-2">
                     <p class="mr-3">Payment method:</p>
                     <p>{listItem[0]?.payment}</p>
-                  </li>
+                  </li> */}
                   <li class="d-flex align-items-start py-2">
                     <p class="mr-3">Date order:</p>
                     <p>{listItem[0]?.dateOrder.split("T")[0]}</p>
@@ -480,7 +410,7 @@ function Checkout({ listItemChosen }) {
                         <thead>
                           <tr>
                             <th class="product-name">Product</th>
-                            <th class="product-name">Shop</th>
+                            {/* <th class="product-name">Shop</th> */}
                             <th class="product-price">Price</th>
                             <th class="product-quantity">Quantity</th>
                             <th class="product-category">Category</th>
@@ -504,8 +434,11 @@ function Checkout({ listItemChosen }) {
                 cursor: "pointer",
                 marginRight: 10,
               }}
+              // onClick={() => {
+              //   setIsClickContinue(false);
+              // }}
               onClick={() => {
-                setIsClickContinue(false);
+                  navigate("/cart");
               }}
             >
               Back
@@ -547,7 +480,7 @@ function Checkout({ listItemChosen }) {
           </div> */}
           </div>
         </section>
-      )}
+   
 
       <div class="modal fade" id="coupon-modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">

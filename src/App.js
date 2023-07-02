@@ -5,7 +5,6 @@ import SingleProduct from "./Layouts/Detail/SingleProduct";
 import Checkout from "./Layouts/Process/Checkout";
 import Cart from "./Layouts/Cart/Cart";
 import Login from "./Components/Login";
-import Chatbot from "./Components/Chatbot";
 import Signup from "./Components/Signup";
 import ForgotPassword from "./Components/ForgotPassword";
 import {
@@ -106,7 +105,6 @@ function App() {
           <></>
         )}
       </div>
-      <Chatbot/>
       <ToastContainer />
       
       

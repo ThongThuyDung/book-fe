@@ -28,20 +28,31 @@ function SingleProduct() {
     );
   });
 
-  const handleAddToCart = (lengthType) => {
-    if (lengthType.length > 0 && !Data.typeId) {
+  // const handleAddToCart = (lengthType) => {
+  //   if (lengthType.length > 0 && !Data.typeId) {
+  //     addItemToCart(
+  //       {
+  //         productId: parseInt(params.productId),
+  //         quantity: Data.quantity
+         
+  //       },
+  //       notify
+  //     );
+  //   } else {
+  //     addItemToCart(Data, notify);
+  //   }
+  //   // console.log(Data);
+  // };
+  const handleAddToCart = (productId, existType) => {
+    // if (existType.length > 0) {
       addItemToCart(
         {
-          productId: parseInt(params.productId),
-          quantity: Data.quantity
-         
+          productId: productId,
+          quantity: 1
         },
         notify
       );
-    } else {
-      addItemToCart(Data, notify);
-    }
-    // console.log(Data);
+
   };
   return (
     <div className="single-product-container">
@@ -184,9 +195,6 @@ function SingleProduct() {
                   quis. Totam a consequatur beatae nostrum, earum consequuntur?
                   Eveniet consequatur ipsum dicta recusandae.
                 </p> */}
-                <p class="product-description my-4 ">
-                  {product.productResponse?.description}
-                </p>
 
                 <form class="cart" action="#" method="post">
                   <div class="quantity d-flex align-items-center">
@@ -212,10 +220,8 @@ function SingleProduct() {
                       style={{ cursor: "pointer" }}
                       class="btn btn-main btn-small"
                       onClick={() => {
-                         handleAddToCart(product.typeList);
-                        //handleAddToCart(item.productResponse.id, item.typeList);
-                        //notify();
-                      }}
+                          handleAddToCart(product.productResponse.id, product.typeList);
+                        }}
                     >
                       Thêm vào giỏ hàng
                     </a>
@@ -238,7 +244,7 @@ function SingleProduct() {
                     </li>
                   </ul>
                 </div> */}
-                {product.typeList?.length > 0 ? (
+                {/* {product.typeList?.length > 0 ? (
                   <div class="product-size d-flex align-items-center mt-4">
                     <span class="font-weight-bold text-capitalize product-meta-title">
                       Language/Size:
@@ -248,22 +254,20 @@ function SingleProduct() {
                       onChange={(e) => {
                         setData({
                           ...Data,
-                          typeId: parseInt(e.target.value),
+                          itemId: parseInt(e.target.value),
                         });
                       }}
                     >
                       {elemType}
                     </select>
                   </div>
-                ) : null}
+                ) : null} */}
 
                 <div class="products-meta mt-4">
                   <div class="product-category d-flex align-items-center">
                     <span class="font-weight-bold text-capitalize product-meta-title">
                       Thể loại :
                     </span>
-                    {/* <a href="#">Products , </a>
-                    <a href="#">Soap</a> */}
                     <a 
                       style={{
                         cursor: "pointer",
@@ -367,8 +371,6 @@ function SingleProduct() {
                     <span class="font-weight-bold text-capitalize product-meta-title">
                       Kích cỡ :
                     </span>
-                    {/* <a href="#">Products , </a>
-                    <a href="#">Soap</a> */}
                     <a 
                       style={{
                         cursor: "pointer",
@@ -392,7 +394,9 @@ function SingleProduct() {
                       {product.productResponse?.numOfPages}{" "}
                     </a>
                   </div>
-                  
+                  <p class="product-description my-4 ">
+                  {product.productResponse?.description}
+                </p>
                   <div class="product-share mt-5">
                     <ul class="list-inline">
                       {/* <li class="list-inline-item">
