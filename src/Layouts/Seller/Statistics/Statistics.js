@@ -9,12 +9,27 @@ import {
   //MDBTextArea,
 } from "mdb-react-ui-kit";
 import {
+  getAllCategory,
+  getAllProduct,
+  searchProductByCategory,
+} from "../../../APIs/product.api";
+import {
   getSaleInforOrderReceived,
   apiUpdateStatus
 } from "../../../APIs/order.api";
-const Statistic = ({ revenue }) => {
-  const [listInforReceived, setListOrderReceived] = useState([])
+const Statistic = ({ keyword }) => {
+  const [listInforReceived, setListOrderReceived] = useState([]);
+  const [listMonth, setListMonth] = useState([]);
+  const [typeMonth, setTypeMonth] = useState(0);
 
+
+  const elemMonth = listMonth?.map((item, index) => {
+    return (
+      <option value={item.id} key={item.id}>
+        {item.name}
+      </option>
+    );
+  });
   useEffect(() => {
      getSaleInforOrderReceived(setListOrderReceived);
   },[])
@@ -27,6 +42,46 @@ const Statistic = ({ revenue }) => {
       <MDBCol className="mt-4" style={{marginLeft : "-15px"}}>
           <MDBCard className="mb-4">
             <MDBCardBody>
+            <div class="heading d-flex justify-content-between mb-5 mr-4">
+                      <p class="result-count mb-0">
+                        {" "}
+                      </p>
+                      <form class="ordering " method="get">
+                        <select
+                          name="orderby"
+                          class="orderby form-control"
+                          aria-label="Shop order"
+                          onChange={(e) => {
+                            setTypeMonth(e.target.value);
+                          }}
+                        >
+                          <option value={0} selected="selected">
+                            Tháng
+                          </option>
+                          {elemMonth}
+                        </select>
+                      </form>
+                    </div>
+                    <div class="heading d-flex justify-content-between mb-5 mr-4">
+                      <p class="result-count mb-0">
+                        {" "}
+                      </p>
+                      <form class="ordering " method="get">
+                        <select
+                          name="orderby"
+                          class="orderby form-control"
+                          aria-label="Shop order"
+                          onChange={(e) => {
+                            setTypeMonth(e.target.value);
+                          }}
+                        >
+                          <option value={0} selected="selected">
+                            Năm
+                          </option>
+                          {elemMonth}
+                        </select>
+                      </form>
+                    </div>
             <div class="container-fluid" style={{marginLeft : "110px"}}>
               <form class="d-flex w-75">
                   <input
@@ -48,12 +103,12 @@ const Statistic = ({ revenue }) => {
                 <MDBCol sm="2">
                   <MDBCardText>Months</MDBCardText>
                 </MDBCol>
-                <MDBCol sm="2">
+                <MDBCol sm="3">
                   <MDBCardText>Số lượng đã bán</MDBCardText>
                 </MDBCol>
-                <MDBCol sm="2">
+                {/* <MDBCol sm="3">
                   <MDBCardText>Số lượng còn lại</MDBCardText>
-                </MDBCol>
+                </MDBCol> */}
                 <MDBCol sm="2">
                   <MDBCardText>Doanh thu</MDBCardText>
                 </MDBCol>

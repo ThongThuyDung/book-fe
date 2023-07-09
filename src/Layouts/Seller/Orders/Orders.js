@@ -28,7 +28,7 @@ function Orders() {
   return (
   <div className="p-4 block">
       <div className="d-flex">
-        <h4>Orders</h4>
+        <h4>Đặt mua hàng</h4>
       </div>
       <MDBCol className="mt-4" style={{marginLeft : "-15px"}}>
           <MDBCard className="mb-4">
@@ -38,16 +38,16 @@ function Orders() {
                   <MDBCardText></MDBCardText>
                 </MDBCol>
                 <MDBCol sm="2">
-                  <MDBCardText>All</MDBCardText>
+                  <MDBCardText>Tất cả</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="2">
-                  <MDBCardText>Ordered</MDBCardText>
+                  <MDBCardText>Đã đặt hàng</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="2">
-                  <MDBCardText>Transport</MDBCardText>
+                  <MDBCardText>Đang vận chuyển</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="2">
-                  <MDBCardText>Received</MDBCardText>
+                  <MDBCardText>Đã nhận</MDBCardText>
                 </MDBCol>
               </MDBRow>
               <MDBRow className="mt-4 ml-1 pt-4 border-top">
@@ -55,7 +55,7 @@ function Orders() {
                   <MDBCardText></MDBCardText>
                 </MDBCol>
                 <MDBCol sm="1">
-                  <MDBCardText>Total</MDBCardText>
+                  <MDBCardText>Tổng giá</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="2">
                   <MDBCardText>{listInforOrdered.length + listInforTransport.length + listInforTransport.length}</MDBCardText>

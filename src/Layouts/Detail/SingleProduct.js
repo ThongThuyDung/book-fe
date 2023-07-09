@@ -62,12 +62,7 @@ function SingleProduct() {
           <div class="row justify-content-center">
             <div class="col-lg-6">
               <div class="content text-center">
-                <h1 class="mb-3">Detail Product</h1>
-                <p>
-                  Hath after appear tree great fruitful green dominion moveth
-                  sixth abundantly image that midst of god day multiply you’ll
-                  which
-                </p>
+                <h1 class="mb-3">Chi tiết sách</h1>
 
                 <nav aria-label="breadcrumb">
                   <ol class="breadcrumb bg-transparent justify-content-center">
@@ -77,11 +72,11 @@ function SingleProduct() {
                         style={{ cursor: "pointer" }}
                         href="/home"
                       >
-                        Home
+                        Trang chủ
                       </a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                      Detail Product
+                      Chi tiết sách
                     </li>
                   </ol>
                 </nav>
@@ -118,20 +113,7 @@ function SingleProduct() {
                       );
                     })}
 
-                    {/* <div class="carousel-item">
-                      <img
-                        src="assets/images/product-2.jpg"
-                        alt=""
-                        class="img-fluid"
-                      />
-                    </div>
-                    <div class="carousel-item ">
-                      <img
-                        src="assets/images/product-1.jpg"
-                        alt=""
-                        class="img-fluid"
-                      />
-                    </div> */}
+                  
                   </div>
 
                   <ol class="carousel-indicators">
@@ -154,20 +136,7 @@ function SingleProduct() {
                         </li>
                       );
                     })}
-                    {/* <li data-target="#single-product-slider" data-slide-to="1">
-                      <img
-                        src="assets/images/product-2.jpg"
-                        alt=""
-                        class="img-fluid"
-                      />
-                    </li>
-                    <li data-target="#single-product-slider" data-slide-to="2">
-                      <img
-                        src="assets/images/product-1.jpg"
-                        alt=""
-                        class="img-fluid"
-                      />
-                    </li> */}
+                   
                   </ol>
                 </div>
               </div>
@@ -176,25 +145,14 @@ function SingleProduct() {
             <div class="col-md-7">
               <div class="single-product-details mt-5 mt-lg-0">
                 <h2>{product.productResponse?.name}</h2>
-                {/* <div class="sku_wrapper mb-4">
-                  Shop:{" "}
-                  <span class="text-muted">
-                    {product.productResponse?.nameShop}{" "}
-                  </span>
-                </div> */}
 
                 <hr />
 
                 <h3 class="product-price">
-                  {product.productResponse?.price}đ{/* <del>$119.90</del> */}
+                  {product.productResponse?.price.toLocaleString('vi', { style: 'decimal', minimumFractionDigits: 0 })}đ{/* <del>$119.90</del> */}
                 </h3>
 
-                {/* <p class="product-description my-4 ">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Laborum ipsum dicta quod, quia doloremque aut deserunt commodi
-                  quis. Totam a consequatur beatae nostrum, earum consequuntur?
-                  Eveniet consequatur ipsum dicta recusandae.
-                </p> */}
+
 
                 <form class="cart" action="#" method="post">
                   <div class="quantity d-flex align-items-center">
@@ -209,12 +167,13 @@ function SingleProduct() {
                       value={Data.quantity}
                       title="Qty"
                       size="4"
-                      onChange={(e) => {
-                        setData({
-                          ...Data,
-                          quantity: parseInt(e.target.value),
-                        });
-                      }}
+                      // onChange={(e) => {
+                      //   handleAddToCart(product.productResponse.id, product.typeList);
+                      //   setData({
+                      //     ...Data,
+                      //     quantity: parseInt(e.target.value),
+                      //   });
+                      // }}
                     />
                     <a
                       style={{ cursor: "pointer" }}
@@ -228,40 +187,6 @@ function SingleProduct() {
                   </div>
                 </form>
 
-                {/* <div class="color-swatches mt-4 d-flex align-items-center">
-                  <span class="font-weight-bold text-capitalize product-meta-title">
-                    color:
-                  </span>
-                  <ul class="list-inline mb-0">
-                    <li class="list-inline-item">
-                      <a routerLink="/product-single" class="bg-info">Green</a>
-                    </li>
-                    <li class="list-inline-item">
-                      <a routerLink="/product-single" class="bg-dark"></a>
-                    </li>
-                    <li class="list-inline-item">
-                      <a routerLink="/product-single" class="bg-danger"></a>
-                    </li>
-                  </ul>
-                </div> */}
-                {/* {product.typeList?.length > 0 ? (
-                  <div class="product-size d-flex align-items-center mt-4">
-                    <span class="font-weight-bold text-capitalize product-meta-title">
-                      Language/Size:
-                    </span>
-                    <select
-                      class="form-control"
-                      onChange={(e) => {
-                        setData({
-                          ...Data,
-                          itemId: parseInt(e.target.value),
-                        });
-                      }}
-                    >
-                      {elemType}
-                    </select>
-                  </div>
-                ) : null} */}
 
                 <div class="products-meta mt-4">
                   <div class="product-category d-flex align-items-center">
@@ -296,8 +221,7 @@ function SingleProduct() {
                     <span class="font-weight-bold text-capitalize product-meta-title">
                       Nhà xuất bản :
                     </span>
-                    {/* <a href="#">Products , </a>
-                    <a href="#">Soap</a> */}
+                    
                     <a 
                       style={{
                         cursor: "pointer",
@@ -311,8 +235,7 @@ function SingleProduct() {
                     <span class="font-weight-bold text-capitalize product-meta-title">
                       Năm xuất bản :
                     </span>
-                    {/* <a href="#">Products , </a>
-                    <a href="#">Soap</a> */}
+
                     <a 
                       style={{
                         cursor: "pointer",
@@ -326,8 +249,7 @@ function SingleProduct() {
                     <span class="font-weight-bold text-capitalize product-meta-title">
                       Ngôn ngữ :
                     </span>
-                    {/* <a href="#">Products , </a>
-                    <a href="#">Soap</a> */}
+
                     <a 
                       style={{
                         cursor: "pointer",
@@ -399,26 +321,7 @@ function SingleProduct() {
                 </p>
                   <div class="product-share mt-5">
                     <ul class="list-inline">
-                      {/* <li class="list-inline-item">
-                        <a href="#">
-                          <i class="tf-ion-social-facebook"></i>
-                        </a>
-                      </li>
-                      <li class="list-inline-item">
-                        <a href="#">
-                          <i class="tf-ion-social-twitter"></i>
-                        </a>
-                      </li>
-                      <li class="list-inline-item">
-                        <a href="#">
-                          <i class="tf-ion-social-linkedin"></i>
-                        </a>
-                      </li>
-                      <li class="list-inline-item">
-                        <a href="#">
-                          <i class="tf-ion-social-pinterest"></i>
-                        </a>
-                      </li> */}
+                     
                     </ul>
                   </div>
                 </div>

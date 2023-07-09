@@ -16,7 +16,6 @@ function Transport() {
   useEffect(() => {
     getSaleInforOrderTransport(setListOrderTransport);
  },[])
-
  const updateStatus = (id) => {
   apiUpdateStatus({
     idOrder : id,
@@ -27,7 +26,7 @@ function Transport() {
   return (
   <div className="p-4 block">
       <div className="d-flex">
-        <h4>Transport</h4>
+        <h4>Đang vận chuyển</h4>
       </div>
       <MDBCol className="mt-4" style={{marginLeft : "-15px"}}>
           <MDBCard className="mb-4">
@@ -37,7 +36,7 @@ function Transport() {
                   <input
                       type="Filter order"
                       class="form-control rounded"
-                      placeholder="Filter order"
+                      placeholder="Tìm kiếm đơn hàng"
                       aria-label="Filter order"
                       aria-describedby="search-addon"
                   />
@@ -48,22 +47,22 @@ function Transport() {
               </div>
               <MDBRow className="mt-4 ml-1">
                 <MDBCol sm="2">
-                  <MDBCardText>DateTransport</MDBCardText>
+                  <MDBCardText>Ngày vận chuyển</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="2">
-                  <MDBCardText>Name</MDBCardText>
+                  <MDBCardText>Tên người mua</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="2">
-                  <MDBCardText>Address</MDBCardText>
+                  <MDBCardText>Địa chỉ</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="2">
-                  <MDBCardText>Product</MDBCardText>
+                  <MDBCardText>Sách</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="2">
-                  <MDBCardText>Phone</MDBCardText>
+                  <MDBCardText>Số điện thoại</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="1">
-                  <MDBCardText>Total</MDBCardText>
+                  <MDBCardText>Tổng giá</MDBCardText>
                 </MDBCol>
               </MDBRow>
               {listInforTransport.map((item, index) => (
@@ -77,25 +76,28 @@ function Transport() {
                 <MDBCol sm="2">
                   <MDBCardText>{item.addressOrder}</MDBCardText>
                 </MDBCol>
-                <MDBCol sm="4">
+                <MDBCol sm="4" style={{ width : "40%"}}>
                 {(item?.products).map((product, index) =>(
                   <MDBRow>
                     <MDBCol style={{ width : "40%"}}>
                       <MDBCardText>{product.nameProduct} - SL: {product.numberProduct}</MDBCardText>
                     </MDBCol>
                     <MDBCol >
-                      <MDBCardText>{product.phone}</MDBCardText>
+                      <MDBCardText>{item.phoneNumber}</MDBCardText>
                     </MDBCol>
                   </MDBRow>
                   ))}
+                  <MDBCol sm="4">
+                      <MDBCardText>{item.phoneNumber}</MDBCardText>
+                    </MDBCol>
                 </MDBCol>
                 <MDBCol sm="1">
-                  <MDBCardText>{item.totalPrice}</MDBCardText>
+                  <MDBCardText>{item.totalPrice.toLocaleString('vi', { style: 'decimal', minimumFractionDigits: 0 })}đ</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="1" style={{marginTop : "-5px", marginLeft : "-28px"}}>
                   <button type="button" style={{padding: "2px 12px", fontSize:"15px",fontSize :"13px", borderRadius:30}} class="btn btn-dark " name="edit" disabled=""
                    onClick={() => updateStatus(item.idOrder)}
-                  >Received</button>
+                  >Đã nhận</button>
                 </MDBCol>
               </MDBRow>
               ))}

@@ -40,6 +40,7 @@ function Products({ keyword, setKeyword }) {
   const [inputSearch,setInputSearch] = useState('');
   const navigate = useNavigate();
   const [listCategory, setListCategory] = useState([]);
+  //const [listLanguage, setListLanguge] = useState([]);
   const [listProduct, setListProduct] = useState([]);
   const [listProducts, setListProducts] = useState([]);
   const [file, setFile] = useState([]);
@@ -152,9 +153,8 @@ function Products({ keyword, setKeyword }) {
       </option>
     );
   });
-
   const language = [{"name":"Tiếng Việt"},{"name":"Tiếng Anh"},{"name":"Tiếng Hàn"},{"name":"Tiếng Nhật"},{"name":"Tiếng Nga"}];
-  const elemTypeLanguage = language.map((item, index) => {
+  const elemLanguage = language.map((item, index) => {
     return (
       <option value={item.name} key={item.id}>
         {item.name}
@@ -164,8 +164,8 @@ function Products({ keyword, setKeyword }) {
   return (
   <div className="p-4 block">
       <div className="d-flex">
-        <h4>Products</h4>
-        <button type="button" class="btn btn-dark " style={{marginLeft : "80%", padding: "1px 20px", fontSize :"13px"}} name="add_product" disabled="" onClick={toggleShowAdd}>Add product</button>
+        <h4>Sách</h4>
+        <button type="button" class="btn btn-dark " style={{marginLeft : "80%", padding: "1px 20px", fontSize :"13px"}} name="add_product" disabled="" onClick={toggleShowAdd}>Thêm sách</button>
       </div>
       <MDBCol className="mt-4" style={{marginLeft : "-15px"}}>
           <MDBCard className="mb-4">
@@ -175,7 +175,7 @@ function Products({ keyword, setKeyword }) {
                   <input
                       type="Filter products"
                       class="form-control rounded"
-                      placeholder="Filter products"
+                      placeholder="Tìm kiếm sách"
                       aria-label="Filter products"
                       aria-describedby="search-addon"
                       value={inputSearch}
@@ -191,22 +191,19 @@ function Products({ keyword, setKeyword }) {
                   <MDBCardText></MDBCardText>
                 </MDBCol>
                 <MDBCol sm="2">
-                  <MDBCardText>Product</MDBCardText>
+                  <MDBCardText>Tên sách</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="3">
-                  <MDBCardText>Author</MDBCardText>
+                  <MDBCardText>Tác giả</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="1">
-                  <MDBCardText>Category</MDBCardText>
-                </MDBCol>
-                {/* <MDBCol sm="1">
-                  <MDBCardText>Type</MDBCardText>
-                </MDBCol> */}
-                <MDBCol sm="1">
-                  <MDBCardText>Price</MDBCardText>
+                  <MDBCardText>Thể loại</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="1">
-                  <MDBCardText>Quantity</MDBCardText>
+                  <MDBCardText>Giá</MDBCardText>
+                </MDBCol>
+                <MDBCol sm="1">
+                  <MDBCardText>Số lượng</MDBCardText>
                 </MDBCol>
               </MDBRow>
               {listProducts.map((item, index) => (
@@ -229,11 +226,8 @@ function Products({ keyword, setKeyword }) {
                 <MDBCol sm="1">
                   <MDBCardText>{item.productResponse.category.name}</MDBCardText>
                 </MDBCol>
-                {/* <MDBCol sm="1">
-                  <MDBCardText>{item.typeList[0].name} - {item.typeList[0].author} - {item.typeList[0].publisher} - {item.typeList[0].yearPublisher} - {item.typeList[0].language} - {item.typeList[0].weight} - {item.typeList[0].numOfPages} - {item.typeList[0].size} </MDBCardText>
-                </MDBCol> */}
                 <MDBCol sm="1">
-                  <MDBCardText>{item.productResponse.price}</MDBCardText>
+                  <MDBCardText>{item.productResponse.price.toLocaleString('vi', { style: 'decimal', minimumFractionDigits: 0 })}đ</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="1">
                   <MDBCardText>{item.productResponse.quantity}</MDBCardText>
@@ -272,12 +266,12 @@ function Products({ keyword, setKeyword }) {
 
                     })
                   }}>
-                  Edit</button>
+                  Sửa</button>
                 </MDBCol>
                 <MDBCol sm="1">
                   <button type="button" class="btn btn-dark btn-small" name="edit" disabled="" 
                    style={{padding: "1px 15px ",backgroundColor:"red",fontSize :"13px",borderRadius:30}} onClick={() => handleDelete(item.productResponse.id)}>
-                    Delete
+                    Xóa
                    </button>
                 </MDBCol>
               </MDBRow>
@@ -286,17 +280,16 @@ function Products({ keyword, setKeyword }) {
                   <MDBModalDialog style={{marginLeft : "25%"}}>
                   <MDBModalContent style={{ width : "160%", marginTop : "4rem"}}>
                       <MDBModalHeader>
-                      <MDBModalTitle style={{marginLeft : "10px"}}>Add product</MDBModalTitle>
-                      {/* <MDBBtn className='btn-close' color='none' onClick={toggleShowAdd}></MDBBtn> */}
+                      <MDBModalTitle style={{marginLeft : "10px"}}>Thêm sách</MDBModalTitle>
                       </MDBModalHeader>
                       <MDBModalBody style={{marginLeft : "10px"}}>
                         <MDBRow>
                           <MDBCol sm="2">
-                              <MDBCardText>Name</MDBCardText>
+                              <MDBCardText>Tên sách</MDBCardText>
                           </MDBCol>
                           <MDBCol sm="10">
                             <MDBInput
-                              placeholder="Short T-shirt"
+                              placeholder="Tên sách"
                               maxLength="120"
                               onChange={(e) => {
                                 setData({
@@ -309,7 +302,7 @@ function Products({ keyword, setKeyword }) {
                         </MDBRow>
                         <MDBRow className="mt-4">
                           <MDBCol sm="2">
-                              <MDBCardText>Description</MDBCardText>
+                              <MDBCardText>Mô tả</MDBCardText>
                           </MDBCol>
                           <MDBCol sm="10">
                             <MDBTextArea
@@ -326,7 +319,7 @@ function Products({ keyword, setKeyword }) {
                         </MDBRow>
                         <MDBRow className="mt-4">
                           <MDBCol sm="2">
-                              <MDBCardText>Image</MDBCardText>
+                              <MDBCardText>Hình ảnh</MDBCardText>
                           </MDBCol>
                           <MDBCol sm="10">
                             <div class="file-upload-wrapper">
@@ -336,7 +329,7 @@ function Products({ keyword, setKeyword }) {
                         </MDBRow>
                         <MDBRow className="mt-4">
                           <MDBCol sm="2">
-                              <MDBCardText>Category</MDBCardText>
+                              <MDBCardText>Thể loại</MDBCardText>
                           </MDBCol>
                           <MDBCol sm="10">
                           <form class="ordering " method="get">
@@ -352,7 +345,7 @@ function Products({ keyword, setKeyword }) {
                               }}
                             >
                               <option value="0" selected="selected">
-                                All Category
+                                Tất cả thể loại
                               </option>
                               {elemCategory}
                             </select>
@@ -361,22 +354,8 @@ function Products({ keyword, setKeyword }) {
                           </MDBCol>
                         </MDBRow>
                         <MDBRow >
-                          {/* <MDBCol sm="12">
-                              <MDBCardText>Type</MDBCardText>
-                          </MDBCol>
                           <MDBCol sm="6" className="d-block">
-                            <MDBCardText>name</MDBCardText>
-                            <MDBInput
-                              onChange={(e) => {
-                                setType({
-                                  ...type,
-                                  name: e.target.value,
-                                })
-                              }}
-                            ></MDBInput>
-                          </MDBCol> */}
-                          <MDBCol sm="6" className="d-block">
-                            <MDBCardText>language</MDBCardText>
+                            <MDBCardText>Ngôn ngữ</MDBCardText>
                             <form class="ordering " method="get">
                             <select
                               name="orderby"
@@ -389,13 +368,13 @@ function Products({ keyword, setKeyword }) {
                                 })
                               }}
                             >
-                              {elemTypeLanguage}
+                              {elemLanguage}
                             </select>
                             <input type="hidden" name="paged" value="1" />
                           </form>
                           </MDBCol>
                           <MDBCol sm="6" className="d-block">
-                            <MDBCardText>size</MDBCardText>
+                            <MDBCardText>Kích cỡ</MDBCardText>
                             <MDBInput
                               onChange={(e) => {
                                 setType({
@@ -406,7 +385,7 @@ function Products({ keyword, setKeyword }) {
                             ></MDBInput>
                           </MDBCol>
                           <MDBCol sm="6" className="d-block">
-                            <MDBCardText>author</MDBCardText>
+                            <MDBCardText>Tác giả</MDBCardText>
                             <MDBInput
                               onChange={(e) => {
                                 setType({
@@ -417,7 +396,7 @@ function Products({ keyword, setKeyword }) {
                             ></MDBInput>
                           </MDBCol>
                           <MDBCol sm="6" className="d-block">
-                            <MDBCardText>publisher</MDBCardText>
+                            <MDBCardText>Nhà xuất bản</MDBCardText>
                             <MDBInput
                               onChange={(e) => {
                                 setType({
@@ -428,7 +407,7 @@ function Products({ keyword, setKeyword }) {
                             ></MDBInput>
                           </MDBCol>
                           <MDBCol sm="6" className="d-block">
-                            <MDBCardText>yearPublisher</MDBCardText>
+                            <MDBCardText>Năm xuất bản</MDBCardText>
                             <MDBInput
                               onChange={(e) => {
                                 setType({
@@ -439,7 +418,7 @@ function Products({ keyword, setKeyword }) {
                             ></MDBInput>
                           </MDBCol>
                           <MDBCol sm="6" className="d-block">
-                            <MDBCardText>weight</MDBCardText>
+                            <MDBCardText>Khối lượng</MDBCardText>
                             <MDBInput
                               onChange={(e) => {
                                 setType({
@@ -450,7 +429,7 @@ function Products({ keyword, setKeyword }) {
                             ></MDBInput>
                           </MDBCol>
                           <MDBCol sm="6" className="d-block">
-                            <MDBCardText>numOfPages</MDBCardText>
+                            <MDBCardText>Số trang</MDBCardText>
                             <MDBInput
                               onChange={(e) => {
                                 setType({
@@ -463,7 +442,7 @@ function Products({ keyword, setKeyword }) {
                         </MDBRow>
                         <MDBRow className="mt-4">
                           <MDBCol sm="2">
-                              <MDBCardText>Price</MDBCardText>
+                              <MDBCardText>Giá</MDBCardText>
                           </MDBCol>
                           <MDBCol sm="10">
                             <MDBInput
@@ -479,7 +458,7 @@ function Products({ keyword, setKeyword }) {
                         </MDBRow>
                         <MDBRow className="mt-4">
                           <MDBCol sm="2">
-                              <MDBCardText>Quantity</MDBCardText>
+                              <MDBCardText>Số lượng</MDBCardText>
                           </MDBCol>
                           <MDBCol sm="10">
                             <MDBInput
@@ -496,18 +475,18 @@ function Products({ keyword, setKeyword }) {
                       </MDBModalBody>
                       <MDBModalFooter>
                       <MDBBtn color='secondary' style={{height : "40px",borderRadius: 30,padding: "2px 15px"}} onClick={toggleShowAdd}>
-                          Close
+                          Đóng
                       </MDBBtn>
                       {data.name.length && data.description.length && data.idCategory.length && data.price.length && data.quantity.length && file ? 
                       (
                         <MDBBtn style={{height : "40px",borderRadius: 30, padding: "2px 15px"}} 
                         onClick={() => {handleAdd()}} >
-                         Save
+                         Lưu
                       </MDBBtn>
                       ) :
                       (
                         <MDBBtn style={{height : "40px",borderRadius: 30, padding: "2px 15px"}} >
-                         Save
+                         Lưu
                         </MDBBtn>
                       )}
                      
@@ -525,7 +504,7 @@ function Products({ keyword, setKeyword }) {
                       <MDBModalBody style={{marginLeft : "10px"}}>
                         <MDBRow>
                           <MDBCol sm="2">
-                              <MDBCardText>Name</MDBCardText>
+                              <MDBCardText>Tên sách</MDBCardText>
                           </MDBCol>
                           <MDBCol sm="10">
                             <MDBInput
@@ -542,7 +521,7 @@ function Products({ keyword, setKeyword }) {
                         </MDBRow>
                         <MDBRow className="mt-4">
                           <MDBCol sm="2">
-                              <MDBCardText>Description</MDBCardText>
+                              <MDBCardText>Mô tả</MDBCardText>
                           </MDBCol>
                           <MDBCol sm="10">
                             <MDBTextArea
@@ -559,7 +538,7 @@ function Products({ keyword, setKeyword }) {
                         </MDBRow>
                         <MDBRow className="mt-4">
                           <MDBCol sm="2">
-                              <MDBCardText>Image</MDBCardText>
+                              <MDBCardText>Hình ảnh</MDBCardText>
                           </MDBCol>
                           <MDBCol sm="10">
                             <div class="file-upload-wrapper">
@@ -569,7 +548,7 @@ function Products({ keyword, setKeyword }) {
                         </MDBRow>
                         <MDBRow className="mt-4">
                           <MDBCol sm="2">
-                              <MDBCardText>Category</MDBCardText>
+                              <MDBCardText>Thể loại</MDBCardText>
                           </MDBCol>
                           <MDBCol sm="10">
                           <form class="ordering " method="get">
@@ -586,7 +565,7 @@ function Products({ keyword, setKeyword }) {
                               }}
                             >
                               <option value="0" selected="selected">
-                                All Category
+                                Tất cả thể loại
                               </option>
                               {elemCategory}
                             </select>
@@ -596,7 +575,7 @@ function Products({ keyword, setKeyword }) {
                         </MDBRow>
                         <MDBRow className="mt-4">
                           <MDBCol sm="6" className="d-block">
-                            <MDBCardText>language</MDBCardText>
+                            <MDBCardText>Ngôn ngữ</MDBCardText>
                             <form class="ordering " method="get">
                             <select
                               name="orderby"
@@ -610,13 +589,13 @@ function Products({ keyword, setKeyword }) {
                                 })
                               }}
                             >
-                              {elemTypeLanguage}
+                              {elemLanguage}
                             </select>
                             <input type="hidden" name="paged" value="1" />
                           </form>
                           </MDBCol>
                           <MDBCol sm="6" className="d-block">
-                            <MDBCardText>size</MDBCardText>
+                            <MDBCardText>Kích thước</MDBCardText>
                             <MDBInput
                               value={dataUpdate.size}
                               onChange={(e) => {
@@ -628,7 +607,7 @@ function Products({ keyword, setKeyword }) {
                             ></MDBInput>
                           </MDBCol>
                           <MDBCol sm="6" className="d-block">
-                            <MDBCardText>author</MDBCardText>
+                            <MDBCardText>Tác giả</MDBCardText>
                             <MDBInput
                               value={dataUpdate.author}
                               onChange={(e) => {
@@ -640,7 +619,7 @@ function Products({ keyword, setKeyword }) {
                             ></MDBInput>
                           </MDBCol>
                           <MDBCol sm="6" className="d-block">
-                            <MDBCardText>publisher</MDBCardText>
+                            <MDBCardText>Nhà xuất bản</MDBCardText>
                             <MDBInput
                               value={dataUpdate.publisher}
                               onChange={(e) => {
@@ -652,7 +631,7 @@ function Products({ keyword, setKeyword }) {
                             ></MDBInput>
                           </MDBCol>
                           <MDBCol sm="6" className="d-block">
-                            <MDBCardText>yearPublisher</MDBCardText>
+                            <MDBCardText>Năm xuất bản</MDBCardText>
                             <MDBInput
                               value={dataUpdate.yearPublisher}
                               onChange={(e) => {
@@ -664,7 +643,7 @@ function Products({ keyword, setKeyword }) {
                             ></MDBInput>
                           </MDBCol>
                           <MDBCol sm="6" className="d-block">
-                            <MDBCardText>weight</MDBCardText>
+                            <MDBCardText>Khối lượng</MDBCardText>
                             <MDBInput
                               value={dataUpdate.weight}
                               onChange={(e) => {
@@ -676,7 +655,7 @@ function Products({ keyword, setKeyword }) {
                             ></MDBInput>
                           </MDBCol>
                           <MDBCol sm="6" className="d-block">
-                            <MDBCardText>numOfPages</MDBCardText>
+                            <MDBCardText>Số trang</MDBCardText>
                             <MDBInput
                               value={dataUpdate.numOfPages}
                               onChange={(e) => {
@@ -690,7 +669,7 @@ function Products({ keyword, setKeyword }) {
                         </MDBRow>
                         <MDBRow className="mt-4">
                           <MDBCol sm="2">
-                              <MDBCardText>Price</MDBCardText>
+                              <MDBCardText>Giá</MDBCardText>
                           </MDBCol>
                           <MDBCol sm="10">
                             <MDBInput
@@ -706,7 +685,7 @@ function Products({ keyword, setKeyword }) {
                         </MDBRow>
                         <MDBRow className="mt-4">
                           <MDBCol sm="2">
-                              <MDBCardText>Quantity</MDBCardText>
+                              <MDBCardText>Số lượng</MDBCardText>
                           </MDBCol>
                           <MDBCol sm="10">
                             <MDBInput
@@ -723,9 +702,9 @@ function Products({ keyword, setKeyword }) {
                       </MDBModalBody>
                       <MDBModalFooter>
                       <MDBBtn color='secondary' style={{height : "40px" ,  padding: "2px 15px", fontSize :"13px",borderRadius: 30}} onClick={toggleShowEdit}>
-                          Close
+                          Đóng
                       </MDBBtn>
-                      <MDBBtn style={{height : "40px" ,padding: "2px 15px" , fontSize :"13px",borderRadius: 30}} onClick={() => {handleUpdate()}}>Save</MDBBtn>
+                      <MDBBtn style={{height : "40px" ,padding: "2px 15px" , fontSize :"13px",borderRadius: 30}} onClick={() => {handleUpdate()}}>Lưu</MDBBtn>
                       </MDBModalFooter>
                   </MDBModalContent>
                   </MDBModalDialog>

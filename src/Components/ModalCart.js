@@ -32,7 +32,7 @@ function ModalCart({ listCart, totalPrice }) {
           </a>
           <div class="cart-price">
             <span>{item.quantity} x</span>
-            <span>{item.product.price}</span>
+            <span>{item.product.price.toLocaleString('vi', { style: 'decimal', minimumFractionDigits: 0 })}đ</span>
           </div>
         </div>
         <a
@@ -52,7 +52,7 @@ function ModalCart({ listCart, totalPrice }) {
   return (
     <div class="dropdown-menu cart-dropdown">
       {listCart.length === 0 ? (
-        <p className="text-center">Your cart currently empty!!!</p>
+        <p className="text-center">Giỏ hàng của bạn đang trống</p>
       ) : (
         <div
           style={{
@@ -68,14 +68,14 @@ function ModalCart({ listCart, totalPrice }) {
       <div class="cart-summary">
         {listCart.length === 0 ? null : (
           <div>
-            <span class="h6">Total</span>
+            <span class="h6">Tổng giá</span>
             <span class="total-price h6">{totalPrice}đ</span>
           </div>
         )}
 
         <div class="text-center cart-buttons mt-3">
           <a href="cart" class="btn btn-small btn-transparent btn-block">
-            View Cart
+            Xem giỏ hàng
           </a>
           {/* <a class="btn btn-small btn-main btn-block">Checkout</a> */}
         </div>

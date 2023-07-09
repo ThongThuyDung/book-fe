@@ -9,21 +9,14 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 
 function ListProduct({ keyword }) {
-  const itemEachPage = 6;
+  const itemEachPage = 8;
   const [listProduct, setListProduct] = useState([]);
   const [numberPage, setNumberPage] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [listEachProductPage, setListEachProductPage] = useState([]);
   const [listCategory, setListCategory] = useState([]);
   const [typeCategory, setTypeCategory] = useState(0);
-  // const totalPages = 10;
-  // const handlePageChange = (page) => {
-  //   setCurrentPage(page);
-  // };
-  // const renderItems = () => {
-  //   const itemsPerPage = 5;
-  //   const startIndex = (currentPage - 1) * itemsPerPage;
-  // }
+  
   const notify = (value) => toast(value);
 
   useEffect(() => {
@@ -32,25 +25,26 @@ function ListProduct({ keyword }) {
 
   useEffect(() => {
     setCurrentPage(1);
-    if (typeCategory === 0) {
+    if (typeCategory < 1) {
       getAllProduct(setListProduct);
+      console.log('get')
     } else {
       searchProductByCategory(typeCategory, setListProduct);
     }
   }, [typeCategory, keyword]);
 
   useEffect(() => {
-    let filterProduct = listProduct.filter((item) => {
+    let filterProduct = listProduct?.filter((item) => {
       let copyItem = item.productResponse.name.toLowerCase();
       return copyItem.includes(keyword.toLowerCase());
     });
     let arr = [];
     let arr1 = [];
-    for (let i = 1; i <= Math.ceil(filterProduct.length / itemEachPage); i++) {
+    for (let i = 1; i <= Math.ceil(filterProduct?.length / itemEachPage); i++) {
       arr.push(i);
     }
 
-    arr1 = filterProduct.slice(
+    arr1 = filterProduct?.slice(
       (currentPage - 1) * itemEachPage,
       currentPage * itemEachPage
     );
@@ -77,7 +71,7 @@ function ListProduct({ keyword }) {
     navigate(`/detail-product/${idProduct}`);
   };
   //console.log(listProduct)
-  const handleAddToCart = (productId, existType) => {
+  const handleAddToCart = (productId) => {
     // if (existType.length > 0) {
       addItemToCart(
         {
@@ -86,19 +80,11 @@ function ListProduct({ keyword }) {
         },
         notify
       );
-    // } else {
-    //   addItemToCart(
-    //     {
-    //       productId: productId,
-    //       quantity: 1
-    //     },
-    //     notify
-    //   );
-    // }
+
   };
   const elemListProduct = listEachProductPage?.map((item, index) => {
     return (
-      <div class="col-lg-4 col-12 col-md-6 col-sm-6 mb-5" key={index}>
+      <div class="col-lg-3 col-12 col-md-6 col-sm-6 mb-3 mb-lg-0" key={index}>
         <div class="product">
           <div class="product-wrap" >
             <p
@@ -150,9 +136,6 @@ function ListProduct({ keyword }) {
             >
               <i class="tf-ion-android-cart text-white"></i>
             </a>
-            <a>
-              <i class="tf-ion-ios-heart"></i>
-            </a>
           </div>
 
           <div class="product-info">
@@ -168,7 +151,7 @@ function ListProduct({ keyword }) {
                 {item.productResponse.name}
               </p>
             </h2>
-            <span class="price">{item.productResponse.price}đ</span>
+            <span class="price">{item.productResponse.price.toLocaleString('vi', { style: 'decimal', minimumFractionDigits: 0 })}đ</span>
           </div>
         </div>
       </div>
@@ -214,11 +197,11 @@ function ListProduct({ keyword }) {
     <section class="products-shop section">
       <div class="container">
         <div class="row">
-          <div class="col-md-9">
+          <div class="col-md-12">
             <div class="row align-items-center">
-              <div class="col-lg-12 mb-4 mb-lg-0">
+              <div class="col-lg-12 mb-4 col-md-6 col-sm-6 mb-lg-0">
                 <div class="section-title">
-                  <h2 class="d-block text-left-sm">Products</h2>
+                  <h2 class="d-block text-left-sm">Sách</h2>
                   <div
                     style={{
                       display: "flex",
@@ -227,10 +210,9 @@ function ListProduct({ keyword }) {
                       alignItems: "center",
                     }}
                   >
-                    <div class="heading d-flex justify-content-between mb-5 mr-4">
+                    <div class="heading d-flex justify-content-between mb-5">
                       <p class="result-count mb-0">
                         {" "}
-                        {/* Showing 1–6 of {listProduct.length} results */}
                       </p>
                       <form class="ordering " method="get">
                         <select
@@ -238,16 +220,14 @@ function ListProduct({ keyword }) {
                           class="orderby form-control"
                           aria-label="Shop order"
                           onChange={(e) => {
-                            // alert(e.target.value);
                             setTypeCategory(e.target.value);
                           }}
                         >
                           <option value={0} selected="selected">
-                            All Category
+                            Tất cả thể loại
                           </option>
                           {elemCategory}
                         </select>
-                        {/* <input type="hidden" name="paged" value="1" /> */}
                       </form>
                     </div>
 
@@ -256,7 +236,7 @@ function ListProduct({ keyword }) {
                         {" "}
                         {/* Showing 1–6 of {listProduct.length} results */}
                       </p>
-                      <form class="ordering " method="get">
+                      {/* <form class="ordering " method="get">
                         <select
                           name="orderby"
                           class="orderby form-control"
@@ -271,7 +251,7 @@ function ListProduct({ keyword }) {
                           <option value="">Sort by price: high to low</option>
                         </select>
                         <input type="hidden" name="paged" value="1" />
-                      </form>
+                      </form> */}
                     </div>
                   </div>
                 </div>

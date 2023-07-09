@@ -40,7 +40,7 @@ import {
 } from "../../APIs/order.api";
 import { removeLocalStorage, STORAGE } from "../../Utils/storage";
 import { Navigate, useNavigate } from "react-router-dom";
-import Seller from "./Seller";
+//import Seller from "./Seller";
 
 const drawerWidth = 240;
 
@@ -70,7 +70,7 @@ export default function PermanentDrawerLeft() {
             <MDBCol>
               <MDBBreadcrumb className="bg-white rounded-3 p-3 mb-4 mt-4">
                 <MDBBreadcrumbItem>
-                  <a href="/home">Home</a>
+                  <a href="/home">Trang chủ</a>
                 </MDBBreadcrumbItem>
                 {/* <MDBBreadcrumbItem>
                   <a href="#">My account</a>
@@ -123,7 +123,7 @@ export default function PermanentDrawerLeft() {
         </List>
         <Divider />
         <List>
-          {["User Profile", "Register Seller", "Logout"].map((text, index) => (
+          {["User Profile", "Logout"].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton
                 onClick={() => {
@@ -160,7 +160,7 @@ export default function PermanentDrawerLeft() {
       >
         <Toolbar />
         {currentTabSide === "User Profile" ? <ProfilePage /> : null}
-        {currentTabSide === "Register Seller" ? <Seller /> : null}
+        {/* {currentTabSide === "Register Seller" ? <Seller /> : null} */}
         {currentTabSide === "Ordered" ? (
           <ListOrder listProduct={listProduct} name="Ordered" />
         ) : null}

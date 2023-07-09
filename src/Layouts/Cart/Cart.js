@@ -49,17 +49,19 @@ function Cart({ setListItemChosen, listItemChosen }) {
     productId: parseInt(params.productId),
   });
 
-  const handleUpdateCart = (idItem, quantity) => {
-  
-    // console.log({
-    //   itemId: idItem,
-    //   quantity,
-    //   typeId,
-    // });
+  console.log(listCart)
+
+  const handleUpdateCart = (idItem, quantity, typeId, index) => {
+
+    const newList = [...listCart]
+    newList[index].quantity = quantity
+    setListCart(newList)
+    
     setAction(true);
     updateItemInCart({
       itemId: idItem,
-      quantity
+      quantity,
+      typeId,
     });
   };
   const handleDeleteCart = (idItem) => {
@@ -77,8 +79,8 @@ function Cart({ setListItemChosen, listItemChosen }) {
       <tr
         class="cart_item"
         style={{
-          // flexDirection: "row",
-          // // justifyContent: "center",
+           //flexDirection: "row",
+          //justifyContent: "center",
           alignItems: "center !important",
           width: "100%",
         }}
@@ -106,7 +108,7 @@ function Cart({ setListItemChosen, listItemChosen }) {
           ></input>
         </td>
 
-        <td
+        <td sm="2"
           class="product-thumbnail"
           data-title="Thumbnail"
           style={{
@@ -127,86 +129,61 @@ function Cart({ setListItemChosen, listItemChosen }) {
           </a>
         </td>
 
-        <td class="product-name" data-title="Product">
+        <td sm="2" class="product-name" data-title="Product">
           <a href={`/detail-product/${item.product.id}`}>
             {item.product?.name}
           </a>
         </td>
 
-        <td class="product-price" data-title="Price">
+        <td  sm="1" class="product-price" data-title="Price">
           <span class="amount">
-            {/* <span class="currencySymbol">
-              <pre wp-pre-tag-3=""></pre>
-            </span> */}
-            {item.product?.price}
+            {item.product?.price.toLocaleString('vi', { style: 'decimal', minimumFractionDigits: 0 })}đ
           </span>
         </td>
-        <td class="product-quantity" data-title="Quantity">
+
+        {/* <td class="product-quantity" data-title="Quantity">
+          <span>
+            {item.product?.quantity}
+          </span>
+        </td> */}
+
+        <td sm="1" class="product-quantity" data-title="Quantity" >
           <div class="quantity">
-            <label class="sr-only">Quantity</label>
+            <label class="sr-only">Số lượng</label>
             <input
                       type="number"
                       id="#"
-                      class="input-text qty text form-control w-25 mr-3"
+                      class="input-text qty text w-[70px] mr-3"
                       step="1"
                       min="1"
                       // max="9"
                       name="quantity"
-                      value={data.quantity}
+                      value={item?.quantity}
                       title="Qty"
                       size="4"
                       onChange={(e) => {
-                        setData({
-                          ...data,
-                          quantity: parseInt(e.target.value),
-                        });
-                      }}
-                    />        
+                        handleUpdateCart(item?.id,
+                         parseInt(e.target.value),
+                         item.type?.id, index
+                                );
+                        
+                      }} 
+                    />
           </div>
         </td>
-
-        <td class="product-category" data-title="Category">
-          <div class="category">
-            <label class="sr-only">Category</label>
-            {/* {product?.typeList.length > 0 ? (
-              <select
-                class="form-control"
-                defaultValue={item.type?.id}
-                onChange={(e) => {
-                  handleUpdateCart(
-                    item?.id,
-                    item?.quantity,
-                    parseInt(e.target.value)
-                  );
-                  setData({
-                    ...data,
-                    typeId: parseInt(e.target.value),
-                  });
-                }}
-                style={{
-                  width: "70%",
-                }}
-              >
-                {product?.typeList.map((item, index) => {
-                  return (
-                    <option value={item?.id} key={item?.id}>
-                      {item?.language}
-                      {" - "}
-                      {item?.size}
-                    </option>
-                  );
-                })}
-              </select>
-            ) : null} */}
-          </div>
+        <td sm="2" class="product-category" data-title="Category">
+          <span>
+            {item.product?.category.name}
+          </span>
         </td>
 
-        <td class="product-subtotal" data-title="Total">
+
+        <td sm="2" class="product-subtotal" data-title="Total">
           <span class="amount">
             {/* <span class="currencySymbol">
               <pre wp-pre-tag-3=""></pre>
             </span> */}
-            {item?.quantity * item.product?.price}đ
+            {(item.product?.quantity * item.product?.price).toLocaleString('vi', { style: 'decimal', minimumFractionDigits: 0 })}đ
           </span>
         </td>
         <td class="product-remove" data-title="Remove">
@@ -222,23 +199,9 @@ function Cart({ setListItemChosen, listItemChosen }) {
               handleDeleteCart(item?.id);
             }}
           >
-            ×
+            x
           </a>
         </td>
-
-        {/* <td class="product-remove" data-title="update">
-          <span class="float-right mt-3 mt-md-0">
-            <button
-              type="button"
-              class="btn btn-dark btn-small"
-              name="update_cart"
-              value="Update cart"
-              disabled=""
-            >
-              Update cart
-            </button>
-          </span>
-        </td> */}
       </tr>
     );
   });
@@ -251,16 +214,14 @@ function Cart({ setListItemChosen, listItemChosen }) {
             <div class="col-lg-6">
               <div class="content text-center">
                 <h1 class="mb-3">Cart</h1>
-                Hath after appear tree great fruitful green dominion moveth
-                sixth abundantly image that midst of god day multiply you’ll
-                which
+                
                 <nav aria-label="breadcrumb">
                   <ol class="breadcrumb bg-transparent justify-content-center">
                     <li class="breadcrumb-item">
-                      <a href="/">Home</a>
+                      <a href="/">Trang chủ</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                      Cart
+                      Giỏ hàng
                     </li>
                   </ol>
                 </nav>
@@ -301,12 +262,11 @@ function Cart({ setListItemChosen, listItemChosen }) {
                           ></input>
                         </th>
                         <th class="product-thumbnail"> </th>
-                        <th class="product-name">Product</th>
-                        <th class="product-price">Price</th>
-                        <th class="product-quantity">Quantity</th>
-                        {/* <th class="product-category">Category</th> */}
-                        <th class="product-subtotal">Total</th>
-                        <th class="product-remove"> </th>
+                        <th class="product-name">Sách</th>
+                        <th class="product-price">Giá</th>
+                        <th class="product-quantity">Số lượng</th>
+                        <th class="product-category">Thể loại</th>
+                        <th class="product-subtotal">Tổng giá</th>
                       </tr>
                     </thead>
 
@@ -315,22 +275,7 @@ function Cart({ setListItemChosen, listItemChosen }) {
                       <tr>
                         <td colspan="12" class="actions">
                           <div class="coupon">
-                            {/* <input
-                              type="text"
-                              name="coupon_code"
-                              class="input-text form-control"
-                              id="coupon_code"
-                              value=""
-                              placeholder="Coupon code"
-                            />
-                            <button
-                              type="button"
-                              class="btn btn-black btn-small"
-                              name="apply_coupon"
-                              value="Apply coupon"
-                            >
-                              Apply coupon
-                            </button> */}
+
                             {listItemChosen.length > 0 ? (
                               <span class="float-right mt-3 mt-lg-0">
                                 <button
@@ -343,7 +288,7 @@ function Cart({ setListItemChosen, listItemChosen }) {
                                     navigate("/checkout");
                                   }}
                                 >
-                                  Buy
+                                  Mua
                                 </button>
                               </span>
                             ) : null}
@@ -367,30 +312,7 @@ function Cart({ setListItemChosen, listItemChosen }) {
               </div>
             </div>
           </div>
-          {/* <div class="row justify-content-end">
-            <div class="col-lg-4">
-              <div class="cart-info card p-4 mt-4">
-                <h4 class="mb-4">Cart totals</h4>
-                <ul class="list-unstyled mb-4">
-                  <li class="d-flex justify-content-between pb-2 mb-3">
-                    <h5>Subtotal</h5>
-                    <span>$90.00</span>
-                  </li>
-                  <li class="d-flex justify-content-between pb-2 mb-3">
-                    <h5>Shipping</h5>
-                    <span>Free</span>
-                  </li>
-                  <li class="d-flex justify-content-between pb-2">
-                    <h5>Total</h5>
-                    <span>$90.00</span>
-                  </li>
-                </ul>
-                <a href="#" class="btn btn-main btn-small">
-                  Proceed to checkout
-                </a>
-              </div>
-            </div>
-          </div> */}
+          
         </div>
       </section>
     </div>

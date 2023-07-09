@@ -4,6 +4,7 @@ import { createOrder, getInforOrder, getPayment } from "../../APIs/order.api";
 
 function ListOrder({ listProduct, name }) {
   const [list, setList] = useState([]);
+
   useEffect(() => {
     let arr = [];
     listProduct.forEach((item, index) => {
@@ -54,7 +55,7 @@ function ListOrder({ listProduct, name }) {
             width: "11%",
           }}
         >
-          <a className="mb-2">{item1.price}</a>
+          <a className="mb-2">{item1.price.toLocaleString('vi', { style: 'decimal', minimumFractionDigits: 0 })}</a>
         </td>
         <td
           class="product-price"
@@ -65,15 +66,15 @@ function ListOrder({ listProduct, name }) {
         >
           <a className="mb-2">{item1.numberProduct}</a>
         </td>
-        {/* <td
+        <td
           class="product-price"
           data-title="DateOrder"
           style={{
             width: "9%",
           }}
         >
-          <a className="mb-2">{item1.getInforOrder.dateOrder.slice(0,10)}</a>
-        </td> */}
+          <a className="mb-2">{item1.dateOrder.slice(0,10)}</a>
+        </td>
         <td
           class="product-price"
           data-title="Category"
@@ -91,7 +92,7 @@ function ListOrder({ listProduct, name }) {
             width: "42%",
           }}
         >
-          <span class="amount">{item1.numberProduct * item1.price} đ</span>
+          <span class="amount">{(item1.numberProduct * item1.price).toLocaleString('vi', { style: 'decimal', minimumFractionDigits: 0 })} đ</span>
         </td>
       </tr>
     );
@@ -99,7 +100,7 @@ function ListOrder({ listProduct, name }) {
   return (
     <div className="checkout-container">
       <section class="cart shopping page-wrapper">
-        <h2>List Product {name}</h2>
+        <h2>Danh sách đặt hàng</h2>
         <div class="container mt-5">
           <div class="row justify-content-center">
             <div class="col-lg-12">
@@ -112,11 +113,11 @@ function ListOrder({ listProduct, name }) {
                     <thead>
                       <tr>
                         <th class="product-name"></th>
-                        <th class="product-name">Product</th>
-                        <th class="product-price">Price</th>
-                        <th class="product-quantity">Quantity</th>
-                        <th class="product-category">DateOrder</th>
-                        <th class="product-subtotal">Total</th>
+                        <th class="product-name">Sách</th>
+                        <th class="product-price">Giá</th>
+                        <th class="product-quantity">Số lượng</th>
+                        <th class="product-category">Ngày đặt</th>
+                        <th class="product-subtotal">Tổng giá</th>
                       </tr>
                     </thead>
 

@@ -10,7 +10,7 @@ function Header_Seller() {
     >
       <div class="container">
         <Link class="navbar-brand font-weight-bold">
-          Online-market
+          Cửa hàng sách
         </Link>
         <button
           class="navbar-toggler"
@@ -43,7 +43,7 @@ function Header_Seller() {
                 <i class="tf-ion-ios-person mr-3"></i>
               </a>
             </li>
-            <p className="mt-2" style={{ width : "83px"}}>myshop</p>
+            <p className="mt-2" style={{ width : "83px"}}>cửa hàng</p>
         </ul>
       </div>
     </nav>

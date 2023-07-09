@@ -47,6 +47,7 @@ function Header({ keyword, setKeyword }) {
       }
     });
   });
+  
   return (
     <nav
       class={
@@ -81,7 +82,6 @@ function Header({ keyword, setKeyword }) {
             height: "45px",
             width: "40%",
             borderRadius: 30,
-            // border: "none",
             outline: "none",
             padding: "4px 15px 4px",
             backgroundColor: "rgb(235, 235, 235)",
@@ -115,13 +115,11 @@ function Header({ keyword, setKeyword }) {
             <a
               href="/cart"
               class="dropdown-toggle cart-icon"
-              // data-toggle="dropdown"
-              // data-hover="dropdown"
             >
               <i class="tf-ion-android-cart"></i>
             </a>
             {getLocalStorage(STORAGE.USER_TOKEN) ? (
-              <ModalCart listCart={listCart} totalPrice={totalPrice} />
+              <ModalCart listCart={listCart} totalPrice={totalPrice.toLocaleString('vi', { style: 'decimal', minimumFractionDigits: 0 })}/>
             ) : (
               <RequireLogin />
             )}
@@ -140,7 +138,6 @@ function Header({ keyword, setKeyword }) {
             </a>
 
             <div class="dropdown-menu cart-dropdown">
-              {/* <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> */}
               <a class="dropdown-item" href="cart">
                 Xem giỏ hàng
               </a>
@@ -160,11 +157,29 @@ function Header({ keyword, setKeyword }) {
               </a>    
             </div>
           </li>
-          <li> 
-          <div>
-          <a href="./">
+          <li class="dropdown cart-nav dropdown-slide list-inline-item"> 
+          
+          <a class="dropdown-toggle cart-icon"
+              data-toggle="dropdown"
+              data-hover="dropdown"
+              style={{
+                cursor: "pointer",
+              }}
+          >
           <i class="tf-ion-android-notifications"></i>
           </a>
+          <div class=" dropdown-menu notification-content">
+          <div class='dropdown-item notification-header'>
+          <div class='dropdown-item notification-header-title'>
+                  Thông báo
+          </div>
+                <div class='notification-list'>
+                <div class='notification-item_container'>
+
+                </div>
+
+                </div>
+             </div>
           </div>
           </li>
         </ul>

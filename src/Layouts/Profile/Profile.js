@@ -91,12 +91,9 @@ export default function ProfilePage() {
               <MDBCardBody>
                 <MDBRow display="flex">
                   <MDBCol lg="2">
-                    <MDBCardText>Full Name: </MDBCardText>
+                    <MDBCardText>Họ và tên: </MDBCardText>
                   </MDBCol>
                   <MDBCol lg="6">
-                    {/* <MDBCardText className="text-muted">
-                      Johnatan Smith
-                    </MDBCardText> */}
                     <MDBInput
                       value={dataProfile?.name}
                       onChange={(e) => {
@@ -112,7 +109,7 @@ export default function ProfilePage() {
                 <hr />
                 <MDBRow>
                   <MDBCol lg="2">
-                    <MDBCardText>Phone: </MDBCardText>
+                    <MDBCardText>Số điện thoại: </MDBCardText>
                   </MDBCol>
                   <MDBCol lg="6">
                     <MDBInput
@@ -130,7 +127,7 @@ export default function ProfilePage() {
                 <hr />
                 <MDBRow>
                   <MDBCol lg="2">
-                    <MDBCardText>Address: </MDBCardText>
+                    <MDBCardText>Địa chỉ: </MDBCardText>
                   </MDBCol>
                   <MDBCol lg="6">
                     <MDBInput
@@ -147,7 +144,7 @@ export default function ProfilePage() {
                 <hr />
                 <MDBRow>
                   <MDBCol lg="2">
-                    <MDBCardText>Birthday: </MDBCardText>
+                    <MDBCardText>Ngày sinh: </MDBCardText>
                   </MDBCol>
                   <MDBCol lg="6">
                     <MDBInput
@@ -169,7 +166,7 @@ export default function ProfilePage() {
                 <hr />
                 <MDBRow>
                   <MDBCol lg="2">
-                    <MDBCardText>District: </MDBCardText>
+                    <MDBCardText>Quận/Huyện: </MDBCardText>
                   </MDBCol>
                   <MDBCol lg="6">
                     <select
@@ -182,24 +179,6 @@ export default function ProfilePage() {
                       }}
                       value={dataProfile?.district_id}
                     >
-                      {/* <option value={0}> */}
-                      {/* <input
-                        type="search"
-                        // ref={inputSearch}
-                        style={{
-                          height: "40px",
-                          width: "40%",
-                          borderRadius: 30,
-                          // border: "none",
-                          outline: "none",
-                          padding: "4px 10px 4px",
-                        }}
-                        onChange={(e) => {
-                          // setKeyword(e.target.value);
-                        }}
-                        placeholder="Enter name product which you want..."
-                      /> */}
-                      {/* </option> */}
                       {elemDistrict}
                     </select>
                   </MDBCol>
@@ -207,7 +186,6 @@ export default function ProfilePage() {
                 <hr></hr>
                 <div class="text-center cart-buttons mt-3">
                   <a
-                    // href="cart"
                     class="btn btn-small btn-main btn-inline-block"
                     onClick={() => {
                       handleUpdateProfile();
@@ -216,7 +194,7 @@ export default function ProfilePage() {
                       cursor: "pointer",
                     }}
                   >
-                    Update
+                    Cập nhật
                   </a>
                 </div>
               </MDBCardBody>

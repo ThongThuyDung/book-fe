@@ -23,6 +23,47 @@ function getAllProduct(setListProduct) {
       console.log(err);
     });
 }
+function getRecommend(setListRecommend) {
+  axios({
+    method: "get",
+    url: `${baseUrl}product/get-recommend-one`,
+    headers: {
+      Authorization: `${getLocalStorage(STORAGE.USER_TOKEN)}`,
+      "Content-Type": "multipart/form-data",
+    },
+  })
+    .then((res) => res.data)
+    .then((data) => {
+      return data.body;
+    })
+    .then((body) => {
+      setListRecommend(body.productListResponse);
+      console.log(body)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+function getRecommendContent(setListRecommendContent) {
+  axios({
+    method: "get",
+    url: `${baseUrl}product/get-recommend-content`,
+    headers: {
+      Authorization: `${getLocalStorage(STORAGE.USER_TOKEN)}`,
+      "Content-Type": "multipart/form-data",
+    },
+  })
+    .then((res) => res.data)
+    .then((data) => {
+      return data.body;
+    })
+    .then((body) => {
+      setListRecommendContent(body.productListResponse);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
 
 function getProductById(idProduct, setProduct = null) {
   axios({
@@ -154,7 +195,7 @@ function searchProductByKeyword(keyword, setData) {
     })
     .then((body) => {
       // console.log(body);
-      setData(body);
+      setData(body.productListResponse);
     })
     .catch((err) => {
       console.log(err);
@@ -162,20 +203,16 @@ function searchProductByKeyword(keyword, setData) {
 }
 
 function searchProductByCategory(idCategory, setData) {
-  // console.log(getLocalStorage(STORAGE.USER_TOKEN).split(".")[2]);
   axios({
     method: "get",
     url: `${baseUrl}product/search-product-by-category-id/${idCategory}?num=1`,
-    // headers: {
-    //   Authorization: `${getLocalStorage(STORAGE.USER_TOKEN)}`,
-    // },
   })
     .then((res) => {
       return res.data;
     })
     .then((data) => data.body)
     .then((body) => {
-      setData(body);
+      setData(body.productListResponse);
     })
     .catch((err) => {
       console.log(err);
@@ -191,5 +228,7 @@ export {
   getProductByShop,
   apiCreateProduct,
   apiUpdateProduct,
-  apiDeleteProduct
+  apiDeleteProduct,
+  getRecommend,
+  getRecommendContent
 };

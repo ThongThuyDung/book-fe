@@ -14,7 +14,7 @@ const NotFound = () => (
       }}
     />
     <Link to="/" className="link-home">
-      Go Home
+      Trở về trang chủ
     </Link>
   </div>
 );
