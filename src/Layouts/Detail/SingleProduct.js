@@ -46,13 +46,10 @@ function SingleProduct() {
   const handleAddToCart = (productId, existType) => {
     // if (existType.length > 0) {
       addItemToCart(
-        {
-          productId: productId,
-          quantity: 1
-        },
+        Data,
         notify
       );
-
+      
   };
   return (
     <div className="single-product-container">
@@ -165,6 +162,12 @@ function SingleProduct() {
                       // max="9"
                       name="quantity"
                       value={Data.quantity}
+                      onChange={(e) =>
+                        setData({
+                          ...Data,
+                          quantity: e.target.value
+                        })
+                      }
                       title="Qty"
                       size="4"
                       // onChange={(e) => {

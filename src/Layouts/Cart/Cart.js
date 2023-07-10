@@ -49,8 +49,6 @@ function Cart({ setListItemChosen, listItemChosen }) {
     productId: parseInt(params.productId),
   });
 
-  console.log(listCart)
-
   const handleUpdateCart = (idItem, quantity, typeId, index) => {
 
     const newList = [...listCart]
@@ -68,9 +66,7 @@ function Cart({ setListItemChosen, listItemChosen }) {
     setAction(true);
     deleteItemInCart(idItem, notify);
   };
-  // useEffect(() => {
-  //   console.log(listItemChosen);
-  // }, [listItemChosen]);
+
   const elemListItemInCart = listCart.map((item, index) => {
     let product = listProduct.find((itemProduct, indexProduct) => {
       return itemProduct.productResponse?.id === item.product?.id;
@@ -79,16 +75,11 @@ function Cart({ setListItemChosen, listItemChosen }) {
       <tr
         class="cart_item"
         style={{
-           //flexDirection: "row",
-          //justifyContent: "center",
           alignItems: "center !important",
           width: "100%",
         }}
       >
         <td>
-          {/* {checked ? (
-            <input type="checkbox" checked={checked ? true : false}></input>
-          ) : ( */}
           <input
             type="checkbox"
             checked={listItemChosen.includes(item.id)}
@@ -141,12 +132,6 @@ function Cart({ setListItemChosen, listItemChosen }) {
           </span>
         </td>
 
-        {/* <td class="product-quantity" data-title="Quantity">
-          <span>
-            {item.product?.quantity}
-          </span>
-        </td> */}
-
         <td sm="1" class="product-quantity" data-title="Quantity" >
           <div class="quantity">
             <label class="sr-only">Số lượng</label>
@@ -180,10 +165,7 @@ function Cart({ setListItemChosen, listItemChosen }) {
 
         <td sm="2" class="product-subtotal" data-title="Total">
           <span class="amount">
-            {/* <span class="currencySymbol">
-              <pre wp-pre-tag-3=""></pre>
-            </span> */}
-            {(item.product?.quantity * item.product?.price).toLocaleString('vi', { style: 'decimal', minimumFractionDigits: 0 })}đ
+            {(item?.quantity * item.product?.price).toLocaleString('vi', { style: 'decimal', minimumFractionDigits: 0 })}đ
           </span>
         </td>
         <td class="product-remove" data-title="Remove">

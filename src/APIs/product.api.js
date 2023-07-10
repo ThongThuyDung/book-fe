@@ -7,18 +7,25 @@ import {
 } from "../Utils/storage";
 import baseUrl from "./config";
 
-function getAllProduct(setListProduct) {
+function getAllProduct(setListProduct, setNumberPage, page) {
   axios({
     method: "get",
-    url: `${baseUrl}product/get-all-product?num=1`,
+    url: `${baseUrl}product/get-all-product?num=${page}`,
   })
     .then((res) => res.data)
     .then((data) => {
       return data.body;
     })
-    .then((body) => {
-      setListProduct(body.productListResponse);
-    })
+    .then((body => 
+      {
+        setListProduct(body.productListResponse);
+        let arrPage = []
+        for(let i = 1; i <= body.totalGet; i++)
+        {
+          arrPage.push(i);
+        }
+        setNumberPage(arrPage);
+      }))
     .catch((err) => {
       console.log(err);
     });
@@ -184,36 +191,51 @@ function getAllCategory(setListCategory) {
     });
 }
 
-function searchProductByKeyword(keyword, setData) {
+function searchProductByKeyword(keyword, setData, setNumberPage, page) {
   axios({
     method: "get",
-    url: `${baseUrl}product/search-product/${keyword}?num=1`,
+    url: `${baseUrl}product/search-product/${keyword}?num=${page}`,
   })
-    .then((res) => res.data)
+    .then((res) => 
+    {
+      console.log(res.data);
+      return res.data;
+    }
+    )
     .then((data) => {
-      return data.body;
-    })
-    .then((body) => {
-      // console.log(body);
-      setData(body.productListResponse);
+      setData(data.productListResponse);
+      let arrPage = []
+      for(let i = 1; i <= data.totalGet; i++)
+      {
+        arrPage.push(i);
+      }
+      setNumberPage(arrPage);
     })
     .catch((err) => {
       console.log(err);
     });
 }
 
-function searchProductByCategory(idCategory, setData) {
+function searchProductByCategory(idCategory, setData, setNumberPage, page) {
   axios({
     method: "get",
-    url: `${baseUrl}product/search-product-by-category-id/${idCategory}?num=1`,
+    url: `${baseUrl}product/search-product-by-category-id/${idCategory}?num=${page}`,
   })
     .then((res) => {
+      console.log(res.data);
       return res.data;
     })
     .then((data) => data.body)
-    .then((body) => {
-      setData(body.productListResponse);
-    })
+    .then((body => 
+      {
+        setData(body.productListResponse);
+        let arrPage = []
+        for(let i = 1; i <= body.totalGet; i++)
+        {
+          arrPage.push(i);
+        }
+        setNumberPage(arrPage);
+      }))
     .catch((err) => {
       console.log(err);
     });

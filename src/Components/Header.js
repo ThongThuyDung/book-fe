@@ -33,10 +33,10 @@ function Header({ keyword, setKeyword }) {
     });
     setTotalPrice(price);
   }, [listCart]);
-  const onButtonClickSearch = ({keyword}) => {
-    keyword(`product/search-product/${keyword}?num=1`);
-    inputSearch.current.focus();
-  };
+  // const onButtonClickSearch = ({keyword}) => {
+  //   keyword(`product/search-product/${keyword}?num=1`);
+  //   inputSearch.current.focus();
+  // };
   const [heightScroll, setHeightScroll] = useState(false);
   useEffect(() => {
     window.addEventListener("scroll", function () {
@@ -89,6 +89,7 @@ function Header({ keyword, setKeyword }) {
           }}
           onChange={(e) => {
             setKeyword(e.target.value);
+            // console.log(keyword);
           }}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
@@ -104,11 +105,11 @@ function Header({ keyword, setKeyword }) {
                 cursor: "pointer",
               }}
               onClick={() => {
-                onButtonClickSearch();
+                // onButtonClickSearch();
               }}
             >
 
-              <i class="tf-ion-android-search"></i>
+              {/* <i class="tf-ion-android-search"></i> */}
             </a>
           </li>
           <li class="dropdown cart-nav dropdown-slide list-inline-item">
@@ -136,28 +137,31 @@ function Header({ keyword, setKeyword }) {
             >
               <i class="tf-ion-ios-person mr-3"></i>
             </a>
-
-            <div class="dropdown-menu cart-dropdown">
-              <a class="dropdown-item" href="cart">
-                Xem giỏ hàng
-              </a>
-              <a class="dropdown-item" href="/my_account">
-                Tài khoản của tôi
-              </a>
-              <a
-                class="dropdown-item" 
-                onClick={() => {
-                  handleLogout();
-                }}
-                style={{
-                  cursor: "pointer",
-                }}
-                >
-                Đăng xuất
-              </a>    
-            </div>
+            {getLocalStorage(STORAGE.USER_TOKEN) ? (
+              <div class="dropdown-menu cart-dropdown">
+                <a class="dropdown-item" href="cart">
+                  Xem giỏ hàng
+                </a>
+                <a class="dropdown-item" href="/my_account">
+                  Tài khoản của tôi
+                </a>
+                <a
+                  class="dropdown-item" 
+                  onClick={() => {
+                    handleLogout();
+                  }}
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  >
+                  Đăng xuất
+                </a>    
+              </div>
+            ) : (
+              <RequireLogin />
+            )}
           </li>
-          <li class="dropdown cart-nav dropdown-slide list-inline-item"> 
+          {/* <li class="dropdown cart-nav dropdown-slide list-inline-item"> 
           
           <a class="dropdown-toggle cart-icon"
               data-toggle="dropdown"
@@ -181,7 +185,7 @@ function Header({ keyword, setKeyword }) {
                 </div>
              </div>
           </div>
-          </li>
+          </li> */}
         </ul>
       </div>
     </nav>

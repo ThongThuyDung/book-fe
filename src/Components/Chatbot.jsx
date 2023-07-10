@@ -4,7 +4,7 @@ import "./styleCB.css";
 const Chatbot = () => {
   const [messages, setMessages] = useState([
     {
-      content: "Xin chào! tôi là ChatGPT",
+      content: "Xin chào! tôi là trợ lý",
       role: "bot",
       sentTime: "just now",
       sender: "ChatGPT",

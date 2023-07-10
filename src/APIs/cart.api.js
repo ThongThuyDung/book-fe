@@ -74,7 +74,13 @@ function addItemToCart(Data, notify) {
     .then((res) => res.data)
     .then((data) => {
       console.log(data);
-      notify("Add this item successfully!");
+      if(data.message === "Add fail!!!"){
+        notify("Thêm thất bại")
+      }
+      if(data.message === "Add success!!!"){
+        notify("Thêm thành công")
+      }
+
     })
     .catch((err) => {
       console.log(err);
@@ -112,7 +118,8 @@ function deleteItemInCart(idItem, notify) {
       return res.data;
     })
     .then((data) => {
-      notify("Remove this item successfully!");
+
+      notify("Xóa thành công!");
       console.log(data);
     })
     .catch((err) => {

@@ -18,7 +18,12 @@ function updateProfile(Data, notify) {
   })
     .then((res) => res.data)
     .then((data) => {
-      notify("Update profile successfully!");
+      if(data.message === "Update fail!!!"){
+        notify("Cập nhật thất bại")
+      }
+      if(data.message === "Update success!!!"){
+        notify("Cập nhật thất bại")
+      }
       console.log(data);
     })
     .catch((err) => {

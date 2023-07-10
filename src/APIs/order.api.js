@@ -94,6 +94,7 @@ function getOrderOrdered(setListOrderOrdered) {
       data.sort((a, b) => {
         return Date.parse(b.dateOrder) - Date.parse(a.dateOrder);
       });
+      console.log(data);
       setListOrderOrdered(data);
     })
     .catch((err) => {
@@ -210,6 +211,55 @@ function apiUpdateStatus(Data) {
     });
 }
 
+function StatisticByYear(year, setList) {
+  axios({
+    method: "get",
+    url: `${baseUrl}statistics/get-info-by-year?year=${year}`,
+    headers: {
+      Authorization: `${getLocalStorage(STORAGE.USER_TOKEN)}`,
+    },
+  })
+    .then((res) => res.data)
+    .then((data) => {
+      // window.location.reload();
+      console.log(data);
+      let arr = []
+      data.forEach((product, index) => {
+        for(let i = 0; i < product.length; i++)
+        {
+          arr.push(product[i]);
+          // console.log(product[i]);
+        }
+      });
+      setList(arr);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+
+function StatisticByMonth(year, month, setList) {
+  axios({
+    method: "get",
+    url: `${baseUrl}statistics/get-by-month?year=${year}&month=${month}`,
+    headers: {
+      Authorization: `${getLocalStorage(STORAGE.USER_TOKEN)}`,
+    },
+  })
+    .then((res) => res.data)
+    .then((data) => {
+      // window.location.reload();
+      setList(data);
+      console.log(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+
+
 export {
   createOrder,
   getInforOrder,
@@ -222,4 +272,6 @@ export {
   getSaleInforOrderTransport,
   getSaleInforOrderReceived,
   apiUpdateStatus,
+  StatisticByMonth, 
+  StatisticByYear,
 };

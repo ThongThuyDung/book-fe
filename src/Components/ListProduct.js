@@ -5,11 +5,12 @@ import {
   getAllCategory,
   getAllProduct,
   searchProductByCategory,
+  searchProductByKeyword,
 } from "../APIs/product.api";
 import { ToastContainer, toast } from "react-toastify";
 
 function ListProduct({ keyword }) {
-  const itemEachPage = 8;
+  const itemEachPage = 24;
   const [listProduct, setListProduct] = useState([]);
   const [numberPage, setNumberPage] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,38 +20,47 @@ function ListProduct({ keyword }) {
   
   const notify = (value) => toast(value);
 
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * max) + min;
+  }
+
   useEffect(() => {
     getAllCategory(setListCategory);
+    console.log(getRandomInt(5, numberPage.length - 6));
   }, []);
 
   useEffect(() => {
     setCurrentPage(1);
-    if (typeCategory < 1) {
-      getAllProduct(setListProduct);
-      console.log('get')
-    } else {
-      searchProductByCategory(typeCategory, setListProduct);
+    if(typeCategory == 0 && keyword == "")
+    {
+      getAllProduct(setListProduct, setNumberPage, 1);
+    }
+    else if(keyword == "" && typeCategory != 0)
+    {
+      searchProductByCategory(typeCategory, setListProduct, setNumberPage, 1);
+    }
+    else 
+    {
+      searchProductByKeyword(keyword, setListProduct, setNumberPage, 1);
     }
   }, [typeCategory, keyword]);
 
+
   useEffect(() => {
-    let filterProduct = listProduct?.filter((item) => {
-      let copyItem = item.productResponse.name.toLowerCase();
-      return copyItem.includes(keyword.toLowerCase());
-    });
-    let arr = [];
+    // let arr = [];
     let arr1 = [];
-    for (let i = 1; i <= Math.ceil(filterProduct?.length / itemEachPage); i++) {
-      arr.push(i);
-    }
+    // for (let i = 1; i <= Math.ceil(listProduct?.length / itemEachPage); i++) {
+    //   arr.push(i);
+    // }
 
-    arr1 = filterProduct?.slice(
-      (currentPage - 1) * itemEachPage,
-      currentPage * itemEachPage
-    );
+    // arr1 = listProduct?.slice(
+    //   (currentPage - 1) * itemEachPage,
+    //   currentPage * itemEachPage
+    // );
 
-    setNumberPage(arr);
-    setListEachProductPage(arr1);
+    // setNumberPage(arr);
+    setListEachProductPage(listProduct);
+    
   }, [listProduct]);
 
   useEffect(() => {
@@ -58,14 +68,27 @@ function ListProduct({ keyword }) {
   }, [listEachProductPage]);
 
   useEffect(() => {
-    let arr = [];
-    arr = listProduct.slice(
-      (currentPage - 1) * itemEachPage,
-      currentPage * itemEachPage
-    );
-
-    setListEachProductPage(arr);
+    // let arr = [];
+    // arr = listProduct.slice(
+    //   (currentPage - 1) * itemEachPage,
+    //   currentPage * itemEachPage
+    // );
+    if(typeCategory == 0 && keyword == "")
+    {
+      getAllProduct(setListProduct, setNumberPage, currentPage);
+    }
+    else if(keyword == "" && typeCategory != 0)
+    {
+      searchProductByCategory(typeCategory, setListProduct, setNumberPage, currentPage);
+    }
+    else 
+    {
+      searchProductByKeyword(keyword, setListProduct, setNumberPage, currentPage);
+    }
+    
+    // setListEachProductPage(arr);
   }, [currentPage]);
+
   const navigate = useNavigate();
   const handleClickDetailProduct = (idProduct) => {
     navigate(`/detail-product/${idProduct}`);
@@ -159,32 +182,108 @@ function ListProduct({ keyword }) {
   });
 
   const elemPage = numberPage?.map((item, index) => {
-    if (currentPage === item) {
+    if(numberPage.length > 10)
+    {
+      // if(item > 5 && item < numberPage.length - 5)
+      // {
+      //   var random = random();
+      //   if(numberPage.length)
+      //   {
+
+      //   }
+      //   return <></>;
+      // }
+      if(currentPage <= 3 || currentPage >= numberPage.length - 3)
+      {
+        if(item > 5 && item <= numberPage.length - 5)
+        {
+          
+          if(Math.ceil(numberPage.length / 2) == item)
+          {
+            return <li
+                      class="page-item"
+                      key={index}
+                      // style={{ cursor: "pointer" }}
+                    >
+                      <p class="page-link" >...</p>
+                    </li>;
+          }
+          return <></>;
+        }
+      }
+      if(currentPage > 3 && currentPage < numberPage.length - 3)
+      {
+        if((item < currentPage - 2 && item > 3) || (item > currentPage + 2 && item <= numberPage.length - 3))
+        {
+          if(item == 4 || item == numberPage.length - 4)
+          {
+            return <li
+                      class="page-item"
+                      key={index}
+                      // style={{ cursor: "pointer" }}
+                    >
+                      <p class="page-link" >...</p>
+                    </li>;
+          }
+          return <></>;
+        }
+      }
+      if (currentPage === item) {
+        return (
+          <li
+            class="page-item active"
+            key={index}
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              setCurrentPage(item);
+            }}
+          >
+            <p class="page-link"> {item}</p>
+          </li>
+        );
+      }
       return (
         <li
-          class="page-item active"
+          class="page-item"
           key={index}
           style={{ cursor: "pointer" }}
           onClick={() => {
             setCurrentPage(item);
           }}
         >
-          <p class="page-link"> {item}</p>
+          <p class="page-link" > {item}</p>
         </li>
       );
     }
-    return (
-      <li
-        class="page-item"
-        key={index}
-        style={{ cursor: "pointer" }}
-        onClick={() => {
-          setCurrentPage(item);
-        }}
-      >
-        <p class="page-link" > {item}</p>
-      </li>
-    );
+    else 
+    {
+      if (currentPage === item) {
+        return (
+          <li
+            class="page-item active"
+            key={index}
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              setCurrentPage(item);
+            }}
+          >
+            <p class="page-link"> {item}</p>
+          </li>
+        );
+      }
+      return (
+        <li
+          class="page-item"
+          key={index}
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            setCurrentPage(item);
+          }}
+        >
+          <p class="page-link" > {item}</p>
+        </li>
+      );
+    }
   });
   const elemCategory = listCategory?.map((item, index) => {
     return (

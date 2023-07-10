@@ -110,14 +110,11 @@ function Checkout({ listItemChosen }) {
 
   const handleOrder = () => {
     let data = {
-      // idPayment: 1,
       listIdItem: listItemChosen,
       province: dataOrder.province,
       address: dataOrder.address,
       info: dataOrder.name + "; " + dataOrder.phone + "; " + dataOrder.address,
     };
-    // console.log(data);
-    // console.log(fillInfor.district.province.province_name);
     createOrder(dataOrder, navigate, notify);
   };
 
@@ -179,126 +176,6 @@ function Checkout({ listItemChosen }) {
           </div>
         </div>
       </section>
-        <div class="page-wrapper">
-          <div class="checkout shopping">
-            <div class="container">
-              <div class="row">
-                <div class="col-lg-8 pr-5">
-                  <div class="billing-details mt-5">
-                    <h4 class="mb-4">Hóa đơn chi tiết</h4>
-                    <form class="checkout-form">
-                      <div class="row">
-                        <div class="col-lg-12">
-                          <div class="form-group mb-4">
-                            <label for="first_name">Số nhà/địa chỉ</label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="street"
-                              placeholder=""
-                              value={dataOrder.address}
-                              onChange={(e) => {
-                                setDataOrder({
-                                  ...dataOrder,
-                                  address: e.target.value,
-                                });
-                                validateStreet(e.target.value);
-                              }}
-                            />
-                            {errData.errStreet &&
-                            errData.errStreet !== "err" ? (
-                              <p
-                                style={{
-                                  color: "red",
-                                  marginTop: 2,
-                                  marginBottom: -5,
-                                }}
-                              >
-                                {errData.errStreet}!!!
-                              </p>
-                            ) : null}
-                          </div>
-                        </div>
-
-                        <div class="col-lg-12">
-                          <div class="form-group mb-4">
-                            <label for="first_name">Tỉnh thành </label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="Province"
-                              placeholder=""
-                              value={dataOrder.province}
-                              onChange={(e) => {
-                                setDataOrder({
-                                  ...dataOrder,
-                                  province: e.target.value,
-                                });
-                                validateProvince(e.target.value);
-                              }}
-                            />
-                            {errData.errProvince &&
-                            errData.errProvince !== "err" ? (
-                              <p
-                                style={{
-                                  color: "red",
-                                  marginTop: 2,
-                                  marginBottom: 2,
-                                }}
-                              >
-                                {errData.errProvince}!!!
-                              </p>
-                            ) : null}
-                            {errData.errCommon &&
-                            errData.errCommon !== "err" ? (
-                              <p
-                                style={{
-                                  color: "red",
-                                  marginBottom: 2,
-                                  marginTop: 2,
-                                }}
-                              >
-                                {errData.errCommon}!!!
-                              </p>
-                            ) : null}
-                          </div>
-                        </div>
-
-                        <div class="col-lg-12">
-                          <div class="form-group mb-4">
-                            <label for="first_name">
-                              Văn phòng
-                            </label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="apartment"
-                              placeholder="văn phòng"
-                            />
-                          </div>
-                        </div>          
-                        <div class="col-lg-12">
-                          <div class="form-group mb-4">
-                            <label for="first_name">
-                            Ghi chú
-                            </label>
-                            <textarea
-                              class="form-control"
-                              id="msg"
-                              cols="30"
-                              rows="5"
-                              placeholder="ghi chú những gì mà bạn muốn ghi chú về sản phẩm"
-                            ></textarea>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         <section class="cart shopping page-wrapper">
           <div className="row justify-content-center">
             <div class="col-lg-6">
@@ -358,7 +235,6 @@ function Checkout({ listItemChosen }) {
                         <thead>
                           <tr>
                             <th class="product-name">Sách</th>
-                            {/* <th class="product-name">Shop</th> */}
                             <th class="product-price">Giá</th>
                             <th class="product-quantity">Số lượng</th>
                             <th class="product-category">Thể loại</th>
@@ -382,9 +258,7 @@ function Checkout({ listItemChosen }) {
                 cursor: "pointer",
                 marginRight: 10,
               }}
-              // onClick={() => {
-              //   setIsClickContinue(false);
-              // }}
+             
               onClick={() => {
                   navigate("/cart");
               }}

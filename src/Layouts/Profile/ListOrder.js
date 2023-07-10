@@ -8,11 +8,16 @@ function ListOrder({ listProduct, name }) {
   useEffect(() => {
     let arr = [];
     listProduct.forEach((item, index) => {
+      if(index == 0)
+      {
+        console.log(item.products);
+      }
       for (let i = 0; i < item.products.length; i++) {
         arr.push(item.products[i]);
       }
     });
     setList(arr);
+    console.log(arr[0]);
   }, []);
 
   const elemListItemInCart = list?.map((item1, index) => {
@@ -45,8 +50,7 @@ function ListOrder({ listProduct, name }) {
             width: "16%",
           }}
         >
-          {/* <a>{item.products.nameProduct}</a> */}
-          <a className="mb-2">{item1.nameProduct}</a>
+          <a className="mb-3">{item1.nameProduct}</a>
         </td>
         <td
           class="product-price"
@@ -55,7 +59,7 @@ function ListOrder({ listProduct, name }) {
             width: "11%",
           }}
         >
-          <a className="mb-2">{item1.price.toLocaleString('vi', { style: 'decimal', minimumFractionDigits: 0 })}</a>
+          <a className="mb-3">{item1.price.toLocaleString('vi', { style: 'decimal', minimumFractionDigits: 0 })}</a>
         </td>
         <td
           class="product-price"
@@ -64,7 +68,7 @@ function ListOrder({ listProduct, name }) {
             width: "9%",
           }}
         >
-          <a className="mb-2">{item1.numberProduct}</a>
+          <a className="mb-3">{item1.numberProduct}</a>
         </td>
         <td
           class="product-price"
@@ -73,16 +77,7 @@ function ListOrder({ listProduct, name }) {
             width: "9%",
           }}
         >
-          <a className="mb-2">{item1.dateOrder.slice(0,10)}</a>
-        </td>
-        <td
-          class="product-price"
-          data-title="Category"
-          style={{
-            width: "23%",
-          }}
-        >
-          <a className="mb-2">{item1.typeOrder}</a>
+          <a className="mb-4">{item1.dateOrder.slice(0,10)}</a>
         </td>
 
         <td
@@ -92,7 +87,7 @@ function ListOrder({ listProduct, name }) {
             width: "42%",
           }}
         >
-          <span class="amount">{(item1.numberProduct * item1.price).toLocaleString('vi', { style: 'decimal', minimumFractionDigits: 0 })} đ</span>
+          <span class="amount mb-3">{(item1.numberProduct * item1.price).toLocaleString('vi', { style: 'decimal', minimumFractionDigits: 0 })} đ</span>
         </td>
       </tr>
     );
